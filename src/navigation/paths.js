@@ -1,7 +1,7 @@
 export let paths = {
-  home: "/",
-  admins: "/administratorer",
-  units: "/enheter",
-  users: "/brukere",
-  profile: "/profil",
+  home: "/home",
+  admins: "/home/administratorer",
+  units: "/home/enheter",
+  users: "/home/brukere",
+  profile: "/home/profil",
 };

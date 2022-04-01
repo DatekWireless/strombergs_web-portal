@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <Wrapper>
       <Content>
-        Home
+        home
         <hr />
       </Content>
     </Wrapper>
@@ -20,5 +20,6 @@ const Wrapper = styled.div`
 const Content = styled.h1`
   font-size: 1.25rem;
   padding: 2.5rem;
+  font-family: "Roboto";
 `;
 export default Home;

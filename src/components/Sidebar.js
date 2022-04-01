@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors, fonts } from "../styles/variables";
 import { paths } from "../navigation/paths";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ReactComponent as Home } from "../assets/icons/Home.svg";
 import { ReactComponent as Admins } from "../assets/icons/Admins.svg";
 import { ReactComponent as Users } from "../assets/icons/Users.svg";
@@ -15,7 +15,11 @@ const Sidebar = () => {
         <NavigationEl>
           <IconHome />
           <LinkContainer>
-            <NavigationLink to={paths.home}>
+            <NavigationLink
+              activeStyle={{ color: `${colors.greenLight}` }}
+              exact
+              to={paths.home}
+            >
               <LinkText>Hjem</LinkText>
             </NavigationLink>
           </LinkContainer>
@@ -23,7 +27,10 @@ const Sidebar = () => {
         <NavigationEl>
           <IconAdmins />
           <LinkContainer>
-            <NavigationLink to={paths.admins}>
+            <NavigationLink
+              activeStyle={{ color: `${colors.greenLight}` }}
+              to={paths.admins}
+            >
               <LinkText>Adminitratorer</LinkText>
             </NavigationLink>
           </LinkContainer>
@@ -31,7 +38,10 @@ const Sidebar = () => {
         <NavigationEl>
           <IconUsers />
           <LinkContainer>
-            <NavigationLink to={paths.users}>
+            <NavigationLink
+              activeStyle={{ color: `${colors.greenLight}` }}
+              to={paths.users}
+            >
               <LinkText>Brukere</LinkText>
             </NavigationLink>
           </LinkContainer>
@@ -39,7 +49,10 @@ const Sidebar = () => {
         <NavigationEl>
           <IconUnits />
           <LinkContainer>
-            <NavigationLink to={paths.units}>
+            <NavigationLink
+              activeStyle={{ color: `${colors.greenLight}` }}
+              to={paths.units}
+            >
               <LinkText>Enheter</LinkText>
             </NavigationLink>
           </LinkContainer>
@@ -47,7 +60,10 @@ const Sidebar = () => {
         <NavigationEl>
           <IconProfile />
           <LinkContainer>
-            <NavigationLink to={paths.profile}>
+            <NavigationLink
+              activeStyle={{ color: `${colors.greenLight}` }}
+              to={paths.profile}
+            >
               <LinkText>Profil</LinkText>
             </NavigationLink>
           </LinkContainer>
@@ -103,10 +119,12 @@ const LinkContainer = styled.div`
   display: flex;
   justify-content: flex-start;
 `;
-const NavigationLink = styled(Link)`
-  color: ${colors.white};
+const NavigationLink = styled(NavLink)`
   text-decoration: none;
   font-family: "Roboto";
+  font-size: 0.85rem;
+  font-weight: 100;
+  color: ${colors.white};
 `;
 
 const LinkText = styled.p``;

@@ -11,7 +11,7 @@ import Template from "../components/Template";
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path={paths.home} component={Home} />
+      <Route exact={true} path={paths.home} component={Home} />
       <Route path="/:id" children={<Template />} />
       {/* <Route path={paths.profile} component={Profile} />
       <Route path={paths.users} component={Users} />
