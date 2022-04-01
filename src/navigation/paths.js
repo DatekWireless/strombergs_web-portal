@@ -1,4 +1,4 @@
-export default {
+export let paths = {
   home: "/",
   admins: "/administratorer",
   units: "/enheter",

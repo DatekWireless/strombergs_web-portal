@@ -1,9 +1,9 @@
 import { createGlobalStyle } from "styled-components";
-import RobotoEot from "../fonts/roboto-v29-latin/roboto-v29-latin-regular.eot";
-import RobotoTtf from "../fonts/roboto-v29-latin/roboto-v29-latin-regular.ttf";
-import RobotoWoff from "../fonts/roboto-v29-latin/roboto-v29-latin-regular.woff";
-import RobotoWoff2 from "../fonts/roboto-v29-latin/roboto-v29-latin-regular.woff2";
-import RobotoSvg from "../fonts/roboto-v29-latin/roboto-v29-latin-regular.svg";
+import RobotoEot from "../assets/fonts/roboto-v29-latin/roboto-v29-latin-regular.eot";
+import RobotoTtf from "../assets/fonts/roboto-v29-latin/roboto-v29-latin-regular.ttf";
+import RobotoWoff from "../assets/fonts/roboto-v29-latin/roboto-v29-latin-regular.woff";
+import RobotoWoff2 from "../assets/fonts/roboto-v29-latin/roboto-v29-latin-regular.woff2";
+import RobotoSvg from "../assets/fonts/roboto-v29-latin/roboto-v29-latin-regular.svg";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -18,10 +18,7 @@ const GlobalStyles = createGlobalStyle`
        url(${RobotoWoff}) format('woff'), /* Modern Browsers */
        url(${RobotoTtf}) format('truetype'), /* Safari, Android, iOS */
        url(${RobotoSvg}) format('svg'); /* Legacy iOS */
-}
-body{
-font-family: "Roboto", 'Arial', sans-serif
-}
+};
 `;
 
 export default GlobalStyles;
