@@ -13,60 +13,65 @@ const Sidebar = () => {
     <SideBarNavigation>
       <NavigationList>
         <NavigationEl>
-          <IconHome />
-          <LinkContainer>
-            <NavigationLink
-              activeStyle={{ color: `${colors.greenLight}` }}
-              exact
-              to={paths.home}
-            >
-              <LinkText>Hjem</LinkText>
-            </NavigationLink>
-          </LinkContainer>
+          <NavigationLink
+            activeStyle={{
+              color: `${colors.greenLight}`,
+              transition: "all 0.1s linear",
+            }}
+            to={paths.home}
+            exact
+          >
+            <IconHome />
+            <p>Hjem</p>
+          </NavigationLink>
         </NavigationEl>
         <NavigationEl>
-          <IconAdmins />
-          <LinkContainer>
-            <NavigationLink
-              activeStyle={{ color: `${colors.greenLight}` }}
-              to={paths.admins}
-            >
-              <LinkText>Adminitratorer</LinkText>
-            </NavigationLink>
-          </LinkContainer>
+          <NavigationLink
+            activeStyle={{
+              color: `${colors.greenLight}`,
+              transition: "all 0.1s linear",
+            }}
+            to={paths.admins}
+          >
+            <IconAdmins />
+            <p>Adminitratorer</p>
+          </NavigationLink>
         </NavigationEl>
         <NavigationEl>
-          <IconUsers />
-          <LinkContainer>
-            <NavigationLink
-              activeStyle={{ color: `${colors.greenLight}` }}
-              to={paths.users}
-            >
-              <LinkText>Brukere</LinkText>
-            </NavigationLink>
-          </LinkContainer>
+          <NavigationLink
+            activeStyle={{
+              color: `${colors.greenLight}`,
+              transition: "all 0.1s linear",
+            }}
+            to={paths.users}
+          >
+            <IconUsers />
+            <p>Brukere</p>
+          </NavigationLink>
         </NavigationEl>
         <NavigationEl>
-          <IconUnits />
-          <LinkContainer>
-            <NavigationLink
-              activeStyle={{ color: `${colors.greenLight}` }}
-              to={paths.units}
-            >
-              <LinkText>Enheter</LinkText>
-            </NavigationLink>
-          </LinkContainer>
+          <NavigationLink
+            activeStyle={{
+              color: `${colors.greenLight}`,
+              transition: "all 0.1s linear",
+            }}
+            to={paths.units}
+          >
+            <IconUnits />
+            <p>Enheter</p>
+          </NavigationLink>
         </NavigationEl>
         <NavigationEl>
-          <IconProfile />
-          <LinkContainer>
-            <NavigationLink
-              activeStyle={{ color: `${colors.greenLight}` }}
-              to={paths.profile}
-            >
-              <LinkText>Profil</LinkText>
-            </NavigationLink>
-          </LinkContainer>
+          <NavigationLink
+            activeStyle={{
+              color: `${colors.greenLight}`,
+              transition: "all 0.1s linear",
+            }}
+            to={paths.profile}
+          >
+            <IconProfile />
+            <p>Profil</p>
+          </NavigationLink>
         </NavigationEl>
       </NavigationList>
     </SideBarNavigation>
@@ -86,10 +91,7 @@ const NavigationList = styled.ul`
 `;
 
 const NavigationEl = styled.li`
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  transition: all 0.2s linear;
   &:hover {
     background-color: ${colors.greyLight};
   }
@@ -97,35 +99,38 @@ const NavigationEl = styled.li`
 
 const IconHome = styled(Home)`
   width: 3rem;
+  margin: 0 2rem 0 0.75rem;
 `;
 const IconAdmins = styled(Admins)`
   width: 3rem;
+  margin: 0 2rem 0 0.75rem;
 `;
 
 const IconUsers = styled(Users)`
   width: 3rem;
+  margin: 0 2rem 0 0.75rem;
 `;
 
 const IconUnits = styled(Units)`
   width: 3rem;
+  margin: 0 2rem 0 0.75rem;
 `;
 
 const IconProfile = styled(Profile)`
   width: 3rem;
+  margin: 0 2rem 0 0.75rem;
 `;
 
-const LinkContainer = styled.div`
-  margin-left: 2rem;
-  display: flex;
-  justify-content: flex-start;
-`;
 const NavigationLink = styled(NavLink)`
   text-decoration: none;
   font-family: "Roboto";
   font-size: 0.85rem;
   font-weight: 100;
   color: ${colors.white};
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;
 
-const LinkText = styled.p``;
 export default Sidebar;

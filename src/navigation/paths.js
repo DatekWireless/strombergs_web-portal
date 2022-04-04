@@ -1,7 +1,10 @@
-export let paths = {
-  home: "/home",
-  admins: "/home/administratorer",
-  units: "/home/enheter",
-  users: "/home/brukere",
-  profile: "/home/profil",
+export const paths = {
+  home: "/",
+  admins: "/administratorer",
+  units: "/enheter",
+  users: "/brukere",
+  profile: "/profil",
+  adminDetails: "/administratorer/:id",
+  userDetails: "/brukere/:id",
+  unitDetails: "/enheter/:id",
 };

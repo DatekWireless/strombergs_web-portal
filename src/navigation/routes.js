@@ -1,22 +1,64 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { paths } from "./paths";
+import { paths } from "./paths.js";
 import Home from "../components/Home";
-// import Admins from "../components/Admins";
-// import Users from "../components/Users";
-// import Units from "../components/Units";
-// import Profile from "../components/Profile";
-import Template from "../components/Template";
+import Admins from "../components/Admins";
+import Users from "../components/Users";
+import Units from "../components/Units";
+import Profile from "../components/Profile";
+
+import AdminDetails from "../components/AdminDetails.js";
+import UnitDetails from "../components/UnitDetails";
+
+export const routes = [
+  {
+    path: [paths.home],
+    exact: true,
+    component: () => <Home />,
+  },
+  {
+    path: [paths.admins],
+    exact: true,
+    component: () => <Admins />,
+  },
+  {
+    path: [paths.users],
+    component: () => <Users />,
+  },
+  {
+    path: [paths.units],
+    component: () => <Units />,
+  },
+  {
+    path: [paths.profile],
+    component: () => <Profile />,
+  },
+  {
+    path: [paths.adminDetails],
+    exact: true,
+    component: () => <AdminDetails />,
+  },
+  {
+    path: [paths.unitDetails],
+    exact: true,
+    component: () => <UnitDetails />,
+  },
+];
 
 const Routes = () => {
   return (
-    <Switch>
-      <Route exact={true} path={paths.home} component={Home} />
-      <Route path="/:id" children={<Template />} />
-      {/* <Route path={paths.profile} component={Profile} />
-      <Route path={paths.users} component={Users} />
-      <Route path={paths.units} component={Units} /> */}
-    </Switch>
+    <>
+      <Switch>
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            children={<route.component />}
+          />
+        ))}
+      </Switch>
+    </>
   );
 };
 

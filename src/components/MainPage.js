@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Routes from "../navigation/routes";
+import Routes from "../navigation/Routes";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
+import LogIn from "../components/LogIn";
 
 const MainPage = () => {
+  const loggedIn = true;
   return (
     <PageWrapper>
       <Topbar />
       <MainView>
         <Sidebar />
-        <Routes />
+        {loggedIn ? <Routes /> : <LogIn />}
       </MainView>
     </PageWrapper>
   );
