@@ -27,6 +27,7 @@ export const routes = [
   },
   {
     path: [paths.units],
+    exact: true,
     component: () => <Units />,
   },
   {
@@ -40,7 +41,6 @@ export const routes = [
   },
   {
     path: [paths.unitDetails],
-    exact: true,
     component: () => <UnitDetails />,
   },
 ];

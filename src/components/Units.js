@@ -13,48 +13,52 @@ import {
   TableCaption,
   TableContainer,
   Badge,
+  useToast,
+  Tag,
+  TagLabel,
+  TagRightIcon,
 } from "@chakra-ui/react";
-
+import { ReactComponent as Add } from "../assets/icons/Add.svg";
 const Users = () => {
   const { url } = useRouteMatch();
   const [units, setUnits] = useState([
     {
-      eier: "XXL",
+      owner: "XXL",
       street: "Vøyensvingen",
       postcode: "14B",
       inUse: true,
       id: 1,
     },
     {
-      eier: "Coop Mega",
+      owner: "Coop Mega",
       street: "Vøyensvingen",
       postcode: "14B",
       inUse: true,
       id: 2,
     },
     {
-      eier: "Frogner Borettslag",
+      owner: "Frogner Borettslag",
       street: "Vøyensvingen",
       postcode: "14B",
       inUse: false,
       id: 3,
     },
     {
-      eier: "Bygdøy Borettslag",
+      owner: "Bygdøy Borettslag",
       street: "Vøyensvingen",
       postcode: "14B",
       inUse: false,
       id: 4,
     },
     {
-      eier: "Majorstuen Borettslag",
+      owner: "Majorstuen Borettslag",
       street: "Vøyensvingen",
       postcode: "14B",
       inUse: false,
       id: 5,
     },
     {
-      eier: "Hasle Borettslag",
+      owner: "Hasle Borettslag",
       street: "Vøyensvingen",
       postcode: "14B",
       inUse: true,
@@ -66,10 +70,14 @@ const Users = () => {
       <Content>
         Enheter
         <BreakingLine />
+        <AddUnit variant="subtle" size="md" colorScheme="cyan">
+          <TagLabel>Legg til en ny kunde/enhet</TagLabel>
+          <TagRightIcon boxSize="12px" as={Add} />
+        </AddUnit>
         <TableMainContainer>
           <Table variant="striped" size="sm" colorScheme={"teal"}>
             <TableCaption>
-              Klikk på et navn til en enhet for å se detaljer
+              Klikk på en eier til en enhet for å se detaljer
             </TableCaption>
             <Thead>
               <Tr>
@@ -82,7 +90,11 @@ const Users = () => {
             <Tbody>
               {units.map((unit) => (
                 <Tr key={unit.id}>
-                  <Td>{unit.eier}</Td>
+                  <Td>
+                    <OwnerLink exact="true" to={`${url}/${unit.owner}`}>
+                      {unit.owner}
+                    </OwnerLink>
+                  </Td>
                   <Td>{unit.street}</Td>
                   <Td>{unit.postcode}</Td>
                   <Td>
@@ -120,16 +132,23 @@ const Content = styled.div`
   height: auto;
   overflow: auto;
 `;
-const Title = styled.h1`
-  font-weight: 600;
-`;
 
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
 `;
+const AddUnit = styled(Tag)`
+  margin-top: 2rem;
+`;
 
 const TableMainContainer = styled(TableContainer)`
   margin-top: 3rem;
+`;
+const OwnerLink = styled(Link)`
+  position: relative;
+  padding: 0.15rem;
+  &:hover {
+    border-bottom: 3px solid ${colors.greenLight};
+  }
 `;
 
 export default Users;

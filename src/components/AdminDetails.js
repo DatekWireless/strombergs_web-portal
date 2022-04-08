@@ -9,7 +9,7 @@ const AdminDetails = () => {
   return (
     <AdminInfoContainer>
       <Content>
-        <Header>Details</Header> <hr />
+        <Header>Detaljer</Header> <hr />
         <InfoBox>
           <Navn>
             {" "}
@@ -23,7 +23,7 @@ const AdminDetails = () => {
           </Role>
           <ID>
             {" "}
-            <Header>AdminID: </Header>
+            <Header>Administratør ID: </Header>
             <Text>1SA-4433242342342343</Text>
           </ID>
           <Created>
@@ -31,7 +31,6 @@ const AdminDetails = () => {
             <Text>31.03.2022, 14:33</Text>
           </Created>
         </InfoBox>
-        {/* <NewUserBox></NewUserBox> */}
       </Content>
     </AdminInfoContainer>
   );
@@ -46,6 +45,9 @@ const Content = styled.div`
   font-size: 1.25rem;
   padding: 2.5rem;
   font-family: "Roboto";
+`;
+const Header = styled.h1`
+  margin-right: 2rem;
 `;
 const InfoBox = styled.div`
   width: auto;
@@ -71,9 +73,6 @@ const Created = styled.div`
   margin: 1rem 0 1rem 0;
 `;
 
-const Header = styled.h1`
-  margin-right: 2rem;
-`;
 const Text = styled.p`
   color: grey;
 `;

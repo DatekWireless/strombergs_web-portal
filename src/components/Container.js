@@ -1,22 +1,15 @@
 import React from "react";
-import { colors } from "../styles/variables";
-import { Badge } from "@chakra-ui/react";
-import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
+import { colors } from "../styles/variables";
+import { Link, useRouteMatch } from "react-router-dom";
+
 import { ReactComponent as Delete } from "../assets/icons/Delete.svg";
 import { ReactComponent as Edit } from "../assets/icons/Edit.svg";
-
-const Admin = ({ name, userID, isLogged }) => {
-  const { url } = useRouteMatch();
-
+const Container = ({ type }) => {
+  let { url } = useRouteMatch();
   return (
-    <UserContainer exact="true" to={`${url}/${userID}`}>
-      <UserName>{name}</UserName>
-      {isLogged ? (
-        <Badge colorScheme="green" variant="subtle">
-          pålogget
-        </Badge>
-      ) : null}
+    <UserContainer to={`${url}/${type}`}>
+      <UserName>{type}</UserName>
       <IconsWrapper>
         <IconDelete />
         <IconEdit />
@@ -24,11 +17,9 @@ const Admin = ({ name, userID, isLogged }) => {
     </UserContainer>
   );
 };
-
 const UserContainer = styled(Link)`
-  margin: 2rem 0 2rem 0;
-  padding: 0.75rem;
-  width: 30rem;
+  padding: 0.35rem;
+  width: 25rem;
   border-radius: 5px;
   border: 2px solid ${colors.greenPale};
   display: flex;
@@ -43,7 +34,7 @@ const UserContainer = styled(Link)`
     -moz-box-shadow: 1px 5px 10px -5px rgba(79, 79, 79, 0.48);
   }
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-family: "Roboto";
   font-weight: 500;
   color: black;
@@ -58,10 +49,10 @@ const IconsWrapper = styled.div`
   align-items: center;
 `;
 const IconDelete = styled(Delete)`
-  width: 1rem;
+  width: 0.85rem;
 `;
 const IconEdit = styled(Edit)`
-  width: 1rem;
+  width: 0.85rem;
 `;
 
-export default Admin;
+export default Container;
