@@ -18,7 +18,7 @@ const Users = () => {
   return (
     <Wrapper>
       <Content>
-        Brukere
+        <Title> Brukere</Title>
         <BreakingLine />
         <TableMainContainer>
           <Table variant="striped" size="sm" colorScheme={"teal"}>

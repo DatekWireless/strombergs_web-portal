@@ -1,24 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import { paths } from "../navigation/paths";
 import { ReactComponent as AddUser } from "../assets/icons/AddUser.svg";
-import {
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { ReactComponent as ForwardArrow } from "../assets/icons/ForwardArrow.svg";
 
 const Home = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { url, path } = useRouteMatch;
   return (
     <Wrapper>
       <Content>
@@ -48,26 +37,12 @@ const Home = () => {
               </CardHeaderWrapper>
             </Card>
           </SectionCards>
-          <AddUserCard onClick={onOpen}>
+          <AddUserCard to={`${paths.registration}`}>
             <AddUserIcon />
             <AddUserText>Opprett en ny administratør</AddUserText>
           </AddUserCard>
         </CardsWrapper>
       </Content>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Ny administratør</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody></ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Lukk
-            </Button>
-            <Button variant="ghost">Lagre</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Wrapper>
   );
 };
@@ -136,7 +111,7 @@ const CardHeader = styled.h1`
   text-decoration: none;
   font-size: 0.85rem;
 `;
-const AddUserCard = styled.div`
+const AddUserCard = styled(Link)`
   width: auto;
   border: 2px solid ${colors.greenMain};
   width: 12.5rem;
@@ -164,5 +139,8 @@ const AddUserText = styled.p`
   font-size: 0.85rem;
 `;
 
+const Arrow = styled(ForwardArrow)`
+  width: 0.75rem;
+`;
 // const Button = styled.button``;
 export default Home;

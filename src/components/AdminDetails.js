@@ -3,78 +3,75 @@ import styled from "styled-components";
 import { colors } from "../styles/variables";
 import { useParams } from "react-router-dom";
 
+import { HStack, Stack, Text } from "@chakra-ui/react";
+
 const AdminDetails = () => {
   const { id } = useParams();
 
   return (
-    <AdminInfoContainer>
+    <Wrapper>
       <Content>
-        <Header>Detaljer</Header> <hr />
+        <Title>Detaljer</Title> <BreakingLine />
         <InfoBox>
-          <Navn>
-            {" "}
-            <Header>Navn: </Header>
-            <Text>Magnus Johansen</Text>
-          </Navn>
-          <Role>
-            {" "}
-            <Header>Rolle: </Header>
-            <Text>Admin</Text>
-          </Role>
-          <ID>
-            {" "}
-            <Header>Administratør ID: </Header>
-            <Text>1SA-4433242342342343</Text>
-          </ID>
-          <Created>
-            <Header>Opprettet: </Header>
-            <Text>31.03.2022, 14:33</Text>
-          </Created>
+          <Stack>
+            <HStack>
+              <Heading fontSize="md">Navn: </Heading>
+              <Text fontSize="md">Magnus Johansen</Text>
+            </HStack>
+            <HStack>
+              <Heading fontSize="md">Rolle: </Heading>
+              <Text fontSize="md">Admin</Text>
+            </HStack>
+            <HStack>
+              <Heading fontSize="md">Administrator ID: </Heading>
+              <Text fontSize="md">1SA-4433242342342343</Text>
+            </HStack>
+            <HStack>
+              <Heading fontSize="md">Opprettet: </Heading>
+              <Text fontSize="md">31.03.2022, 14:33</Text>
+            </HStack>
+          </Stack>
         </InfoBox>
       </Content>
-    </AdminInfoContainer>
+    </Wrapper>
   );
 };
-
-const AdminInfoContainer = styled.div`
+const Wrapper = styled.div`
   height: 92.5vh;
   display: flex;
   flex: 1;
+  overflow: auto;
+  background-color: ${colors.greyLight};
 `;
+
 const Content = styled.div`
+  width: 60%;
   font-size: 1.25rem;
   padding: 2.5rem;
+  margin: 2rem;
+  border-radius: 5px;
   font-family: "Roboto";
+  background-color: white;
+  height: auto;
+  overflow: auto;
 `;
-const Header = styled.h1`
-  margin-right: 2rem;
+const Title = styled.h1`
+  font-weight: 600;
+`;
+
+const BreakingLine = styled.hr`
+  border-top: 2px solid grey;
 `;
 const InfoBox = styled.div`
-  width: auto;
-  border: 1px solid lightgrey;
+  width: 50%;
+  border: 2px solid ${colors.blue};
   border-radius: 5px;
   margin: 2.5rem 0 2.5rem 0;
   padding: 1rem;
 `;
-const Navn = styled.div`
-  display: flex;
-  margin: 1rem 0 1rem 0;
-`;
-const Role = styled.div`
-  display: flex;
-  margin: 1rem 0 1rem 0;
-`;
-const ID = styled.div`
-  display: flex;
-  margin: 1rem 0 1rem 0;
-`;
-const Created = styled.div`
-  display: flex;
-  margin: 1rem 0 1rem 0;
-`;
 
-const Text = styled.p`
-  color: grey;
+const Heading = styled(Text)`
+  font-weight: 600;
 `;
 
 export default AdminDetails;

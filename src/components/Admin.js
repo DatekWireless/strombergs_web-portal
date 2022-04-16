@@ -10,7 +10,7 @@ const Admin = ({ name, userID, isLogged }) => {
   const { url } = useRouteMatch();
 
   return (
-    <UserContainer exact="true" to={`${url}/${userID}`}>
+    <AdminContainer exact="true" to={`${url}/${userID}`}>
       <UserName>{name}</UserName>
       {isLogged ? (
         <Badge colorScheme="green" variant="subtle">
@@ -21,12 +21,11 @@ const Admin = ({ name, userID, isLogged }) => {
         <IconDelete />
         <IconEdit />
       </IconsWrapper>
-    </UserContainer>
+    </AdminContainer>
   );
 };
 
-const UserContainer = styled(Link)`
-  margin: 2rem 0 2rem 0;
+const AdminContainer = styled(Link)`
   padding: 0.75rem;
   width: 30rem;
   border-radius: 5px;

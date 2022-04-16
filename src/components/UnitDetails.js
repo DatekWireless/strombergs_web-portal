@@ -11,17 +11,30 @@ import {
   Tag,
   TagLabel,
   TagRightIcon,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Input,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
 import Container from "./Container";
 import ContainerDetails from "../components/ContainerDetails";
 import UnitInfo from "./UnitInfo";
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
 const UnitDetails = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   let { path, url } = useRouteMatch();
   return (
     <AdminInfoContainer>
       <Content>
-        <Header>Detaljer</Header> <BreakingLine />
+        <Title>Detaljer</Title> <BreakingLine />
         <TabContainer variant="soft-rounded" size="sm" colorScheme="green">
           <TabList>
             <Tab>Enhet</Tab>
@@ -32,7 +45,11 @@ const UnitDetails = () => {
               <UnitInfo />
             </TabPanel>
             <TabPanel>
-              <AddContainer variant="subtle" colorScheme="cyan">
+              <AddContainer
+                onClick={onOpen}
+                variant="subtle"
+                colorScheme="cyan"
+              >
                 <TagLabel>Legg til en kontainer</TagLabel>
                 <TagRightIcon boxSize="12px" as={Add} />
               </AddContainer>
@@ -55,6 +72,52 @@ const UnitDetails = () => {
           </TabPanels>
         </TabContainer>
       </Content>
+      <Modal
+        isCentered
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Ny kontainer</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Stack>
+              <Stack spacing={1}>
+                <Text fontSize="xs">Fraksjon</Text>
+                <Input
+                  focusBorderColor="teal.400"
+                  variant="filled"
+                  placeholder="oppgi fraksjon"
+                />
+              </Stack>
+              <Stack spacing={1}>
+                <Text fontSize="xs">Innkasttype</Text>
+                <Input
+                  focusBorderColor="teal.400"
+                  variant="filled"
+                  placeholder="oppgi innkasttype"
+                />
+              </Stack>
+              <Stack spacing={1}>
+                <Text fontSize="xs">Oppstart av drift</Text>
+                <Input
+                  focusBorderColor="teal.400"
+                  variant="filled"
+                  placeholder="oppgi oppastart av drift"
+                />
+              </Stack>
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="teal" mr={3} onClick={onClose}>
+              Lukk
+            </Button>
+            <Button variant="ghost">Lagre</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </AdminInfoContainer>
   );
 };
@@ -75,8 +138,8 @@ const Content = styled.div`
   height: auto;
 `;
 
-const Header = styled.h1`
-  margin-right: 2rem;
+const Title = styled.h1`
+  font-weight: 600;
 `;
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
@@ -87,6 +150,12 @@ const TabContainer = styled(Tabs)`
 `;
 const AddContainer = styled(Tag)`
   margin-top: 1rem;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    border: 2px solid #69b1bf;
+  }
 `;
 
 const Containers = styled.div`

@@ -17,10 +17,31 @@ import {
   Tag,
   TagLabel,
   TagRightIcon,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Stack,
+  textDecoration,
+  HStack,
+  Input,
+  Checkbox,
+  Text,
+  Radio,
+  RadioGroup,
+  FormControl,
 } from "@chakra-ui/react";
+
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
 const Users = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { url } = useRouteMatch();
+  const [value, setValue] = useState("1");
   const [units, setUnits] = useState([
     {
       owner: "XXL",
@@ -68,12 +89,78 @@ const Users = () => {
   return (
     <Wrapper>
       <Content>
-        Enheter
+        <Title>Enheter</Title>
         <BreakingLine />
-        <AddUnit variant="subtle" size="md" colorScheme="cyan">
+        <AddUnit onClick={onOpen} variant="subtle" size="md" colorScheme="cyan">
           <TagLabel>Legg til en ny kunde/enhet</TagLabel>
           <TagRightIcon boxSize="12px" as={Add} />
         </AddUnit>
+        <Modal
+          isCentered
+          closeOnOverlayClick={false}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Ny enhet</ModalHeader>
+            <ModalCloseButton />
+
+            <ModalBody>
+              <Stack spacing={5}>
+                <Stack spacing={1}>
+                  <Text fontSize="xs">Eier</Text>
+                  <Input
+                    focusBorderColor="teal.400"
+                    variant="filled"
+                    placeholder="oppgi eier"
+                  />
+                </Stack>
+                <HStack>
+                  <Stack spacing={1}>
+                    <Text fontSize="xs">Gatenavn</Text>
+                    <Input
+                      focusBorderColor="teal.400"
+                      variant="filled"
+                      placeholder="oppgi gatenavn"
+                      htmlSize={32}
+                      width="auto"
+                    />
+                  </Stack>
+                  <Stack spacing={1}>
+                    <Text fontSize="xs">Nummer</Text>
+                    <Input variant="filled" htmlSize={4} width="auto" />
+                  </Stack>
+                </HStack>
+
+                <RadioGroup onChange={setValue} value={value}>
+                  <Stack spacing={6} direction="row">
+                    <Radio
+                      colorScheme="teal"
+                      style={{ border: "1px solid lightgrey" }}
+                      value="1"
+                    >
+                      i drift
+                    </Radio>
+                    <Radio
+                      colorScheme="teal"
+                      style={{ border: "1px solid lightgrey" }}
+                      value="2"
+                    >
+                      ikke i drift
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+              </Stack>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="teal" mr={3} onClick={onClose}>
+                Lukk
+              </Button>
+              <Button variant="ghost">Lagre</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <TableMainContainer>
           <Table variant="striped" size="sm" colorScheme={"teal"}>
             <TableCaption>
@@ -132,12 +219,20 @@ const Content = styled.div`
   height: auto;
   overflow: auto;
 `;
-
+const Title = styled.h1`
+  font-weight: 600;
+`;
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
 `;
 const AddUnit = styled(Tag)`
   margin-top: 2rem;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    border: 2px solid #69b1bf;
+  }
 `;
 
 const TableMainContainer = styled(TableContainer)`

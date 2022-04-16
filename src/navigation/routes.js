@@ -9,6 +9,7 @@ import Profile from "../components/Profile";
 
 import AdminDetails from "../components/AdminDetails.js";
 import UnitDetails from "../components/UnitDetails";
+import Registration from "../components/Registration.js";
 
 export const routes = [
   {
@@ -24,6 +25,10 @@ export const routes = [
   {
     path: [paths.users],
     component: () => <Users />,
+  },
+  {
+    path: [paths.registration],
+    component: () => <Registration />,
   },
   {
     path: [paths.units],

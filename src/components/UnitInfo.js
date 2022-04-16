@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Badge, Switch, useToast } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Switch,
+  useToast,
+  createStandaloneToast,
+} from "@chakra-ui/react";
+import { customTheme } from "../styles/theme";
 const UnitInfo = () => {
-  const toast = useToast();
+  const toast = createStandaloneToast();
   const [inOperation, setInOperation] = useState(false);
   const changeStatusHandler = () => {
     setInOperation(!inOperation);
     toast({
+      backgroundColor: "red",
       title: "Status endret",
       description: "Du har nå endret status for enheten",
       status: "success",
-      duration: 1500,
+      duration: 15000,
       isClosable: true,
+      variant: "subtle",
     });
   };
   return (

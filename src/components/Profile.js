@@ -10,7 +10,7 @@ const Profile = () => {
   return (
     <Wrapper>
       <Content>
-        Profil
+        <Title>Profil</Title>
         <BreakingLine />
         <ProfileContent>
           <Navn>Magnus Johanssen</Navn>
@@ -50,7 +50,9 @@ const Content = styled.div`
   overflow: auto;
   width: 60%;
 `;
-
+const Title = styled.h1`
+  font-weight: 600;
+`;
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
 `;
