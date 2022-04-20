@@ -39,7 +39,7 @@ const Home = () => {
           </SectionCards>
           <AddUserCard to={`${paths.registration}`}>
             <AddUserIcon />
-            <AddUserText>Opprett en ny administratør</AddUserText>
+            <AddUserText>Opprett en ny administrator</AddUserText>
           </AddUserCard>
         </CardsWrapper>
       </Content>
