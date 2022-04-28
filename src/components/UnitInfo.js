@@ -24,8 +24,8 @@ const UnitInfo = () => {
   const [inOperation, setInOperation] = useState(false);
 
   const changeStatusHandler = () => {
-    onClose();
     setInOperation(!inOperation);
+    onClose();
     toast({
       backgroundColor: "red",
       title: "Status endret",
@@ -60,10 +60,16 @@ const UnitInfo = () => {
           <Badge colorScheme="red">ikke i drift</Badge>
         )}
       </StatusContainer>
-      <Switch onChange={onOpen} colorScheme="green" size="md">
+      <Switch
+        onChange={onOpen}
+        isChecked={inOperation ? true : false}
+        colorScheme="green"
+        size="md"
+      >
         Endre status på drift av enhet
       </Switch>
       <Modal
+        closeOnOverlayClick={false}
         motionPreset="slideInBottom"
         isCentered
         isOpen={isOpen}
@@ -71,9 +77,7 @@ const UnitInfo = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
-            Er du sikker at du vil slette denne administratøren?
-          </ModalHeader>
+          <ModalHeader>Er du sikker at du vil bytte status?</ModalHeader>
           <ModalCloseButton />
           <ModalFooter>
             <Button
