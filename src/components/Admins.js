@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import Admin from "../components/Admin";
-
+import { useSelector, useDispatch } from "react-redux";
+import { addAdmin, deleteAdmin } from "../features/AdminsSlice";
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
 import {
   Tag,
@@ -26,15 +27,28 @@ import {
 } from "@chakra-ui/react";
 
 const Admins = () => {
+  const admins = useSelector((state) => state.adminsReducer.admins);
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-
+  const [adminData, setAdminData] = useState({ name: "" });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { url } = useRouteMatch();
 
   const handleShowPassword = () => setShowPassword(!showPassword);
+
   const handleShowRepeatPassword = () =>
     setShowRepeatPassword(!showRepeatPassword);
+
+  const inputNameHandler = (event) => {
+    setAdminData({
+      name: event.target.value,
+    });
+  };
+  const saveAdminHandler = () => {
+    dispatch(addAdmin(adminData));
+    setAdminData({ name: "" });
+    onClose();
+  };
 
   return (
     <Wrapper>
@@ -46,10 +60,10 @@ const Admins = () => {
           <TagRightIcon boxSize="12px" as={Add} />
         </AddUnit>
         <StackAdmins spacing={2}>
-          <Admin name="Magnus Johansen" isLogged={true} userID={1} />
-          <Admin name="Arne Mortensen" userID={2} />
-          <Admin name="Filip Iversen" userID={3} />
-          <Admin name="Vilde Rasmussen" userID={4} />
+          {admins.map((admin, index) => (
+            <Admin name={admin.name} key={index} />
+          ))}
+          {/* <Admin name="Magnus Johansen" isLogged={true} userID={1} /> */}
         </StackAdmins>
       </Content>
       <Modal
@@ -69,8 +83,10 @@ const Admins = () => {
                 <Input
                   focusBorderColor="teal.400"
                   variant="filled"
-                  placeholder="oppgi navn"
                   type="text"
+                  placeholder="Navn"
+                  value={adminData.name}
+                  onChange={(event) => inputNameHandler(event)}
                 />
               </Stack>
               <Stack spacing={1}>
@@ -124,7 +140,9 @@ const Admins = () => {
             <Button colorScheme="teal" mr={3} onClick={onClose}>
               Lukk
             </Button>
-            <Button variant="ghost">Legg til</Button>
+            <Button variant="ghost" onClick={saveAdminHandler}>
+              Legg til
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
