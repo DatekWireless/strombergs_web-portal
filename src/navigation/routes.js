@@ -7,10 +7,9 @@ import Users from "../components/Users";
 import Units from "../components/Units";
 import Profile from "../components/Profile";
 
-import AdminDetails from "../components/AdminDetails.js";
+import AdminDetails from "../components/AdminDetails";
 import UnitDetails from "../components/UnitDetails";
-import Registration from "../components/Registration.js";
-
+import Registration from "../components/Registration";
 export const routes = [
   {
     path: [paths.home],

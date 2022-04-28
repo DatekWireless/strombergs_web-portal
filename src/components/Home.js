@@ -5,9 +5,11 @@ import { colors } from "../styles/variables";
 import { paths } from "../navigation/paths";
 import { ReactComponent as AddUser } from "../assets/icons/AddUser.svg";
 import { ReactComponent as ForwardArrow } from "../assets/icons/ForwardArrow.svg";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  const { url, path } = useRouteMatch;
+  /* const { url, path } = useRouteMatch; */
+
   return (
     <Wrapper>
       <Content>

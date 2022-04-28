@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
-import { useParams } from "react-router-dom";
 
 import { HStack, Stack, Text } from "@chakra-ui/react";
 
 const AdminDetails = () => {
-  const { id } = useParams();
-
   return (
     <Wrapper>
       <Content>

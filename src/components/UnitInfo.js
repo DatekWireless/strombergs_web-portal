@@ -1,17 +1,30 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import {
+  Button,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
   Badge,
   Box,
   Switch,
   useToast,
   createStandaloneToast,
 } from "@chakra-ui/react";
-import { customTheme } from "../styles/theme";
+
 const UnitInfo = () => {
   const toast = createStandaloneToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [inOperation, setInOperation] = useState(false);
+
   const changeStatusHandler = () => {
+    onClose();
     setInOperation(!inOperation);
     toast({
       backgroundColor: "red",
@@ -25,38 +38,65 @@ const UnitInfo = () => {
   };
   return (
     <>
-      <Text>
+      <InfoText>
         <Span>Eier:</Span> Coop Mega AS
-      </Text>
-      <Text>
+      </InfoText>
+      <InfoText>
         <Span>Gatenavn:</Span> Hammerstads gate
-      </Text>
-      <Text>
+      </InfoText>
+      <InfoText>
         <Span>Nummer:</Span> 10C
-      </Text>
-      <Text>
+      </InfoText>
+      <InfoText>
         <Span>Enhet_ID:</Span> 22S-328752863292
-      </Text>
+      </InfoText>
       <StatusContainer>
-        <Text>
-          <Span>Status:</Span>{" "}
-        </Text>
+        <InfoText>
+          <Span>Status:</Span>
+        </InfoText>
         {inOperation ? (
           <Badge colorScheme="green">i drift</Badge>
         ) : (
           <Badge colorScheme="red">ikke i drift</Badge>
         )}
       </StatusContainer>
-      <Switch onChange={changeStatusHandler} colorScheme="green" size="md">
+      <Switch onChange={onOpen} colorScheme="green" size="md">
         Endre status på drift av enhet
       </Switch>
+      <Modal
+        motionPreset="slideInBottom"
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            Er du sikker at du vil slette denne administratøren?
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalFooter>
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              mr={3}
+              onClick={changeStatusHandler}
+            >
+              Ja
+            </Button>
+            <Button variant="ghost" colorScheme="teal" mr={3} onClick={onClose}>
+              Nei
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
-const Text = styled.p`
-  margin-right: 1rem;
-`;
 
+const InfoText = styled(Text)`
+  margin-right: 2rem;
+`;
 const Span = styled.span`
   font-weight: 600;
 `;
