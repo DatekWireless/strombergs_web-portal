@@ -22,20 +22,20 @@ const Admin = ({ name, userID, isLogged }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const deleteAdminHandler = (event) => {
     // dispatch(deleteAdmin(event.target.id));
-    console.log("filip");
+
     onClose();
   };
   return (
     <div>
       <AdminContainer>
-        <LinkConatainer exact="true" to={`${url}/${userID}`}>
+        <LinkContainer exact="true" to={`${url}/${userID}`}>
           <UserName>{name}</UserName>
           {isLogged ? (
             <Badge colorScheme="green" variant="subtle">
               pålogget
             </Badge>
           ) : null}
-        </LinkConatainer>
+        </LinkContainer>
         <IconsWrapper>
           <IconConatiner onClick={onOpen}>
             <IconDelete />
@@ -98,11 +98,12 @@ const AdminContainer = styled.div`
   font-weight: 500;
   color: black;
 `;
-const LinkConatainer = styled(Link)`
+const LinkContainer = styled(Link)`
   width: 80%;
 `;
 
 const UserName = styled.p`
+  padding-left: 0.5rem;
   font-size: 0.95rem;
   font-weight: 500;
 `;
@@ -115,8 +116,8 @@ const IconsWrapper = styled.div`
 `;
 
 const IconConatiner = styled.div`
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   &:hover {
     background-color: ${colors.greenPale};

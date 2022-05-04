@@ -63,7 +63,6 @@ const Admins = () => {
           {admins.map((admin, index) => (
             <Admin name={admin.name} key={index} />
           ))}
-          {/* <Admin name="Magnus Johansen" isLogged={true} userID={1} /> */}
         </StackAdmins>
       </Content>
       <Modal
