@@ -6,7 +6,8 @@ import { paths } from "../navigation/paths";
 
 import { ReactComponent as LogInIcon } from "../assets/icons/LogIn.svg";
 import { ReactComponent as LogOutIcon } from "../assets/icons/LogOut.svg";
-const Profile = () => {
+const Profile = ({ signOut }) => {
+  console.log(signOut);
   return (
     <Wrapper>
       <Content>
@@ -22,7 +23,7 @@ const Profile = () => {
             </LogIn>
             <LogOut>
               <LogOutIcon />
-              <LogOutText>Logg ut</LogOutText>
+              <LogOutText onClick={signOut}>Logg ut</LogOutText>
             </LogOut>
           </LogContainer>
         </ProfileContent>
@@ -77,15 +78,23 @@ const LogIn = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 7.5rem;
+  width: 6.5rem;
+  border: 3px solid ${colors.white};
+  padding: 0.125rem;
 `;
-const LogOut = styled(LogIn)``;
+const LogOut = styled(LogIn)`
+  &:hover {
+    border-bottom: 3px solid ${colors.greenLight};
+  }
+  cursor: pointer;
+`;
 
 const LogInText = styled.p`
   display: inline-block;
   width: 5rem;
   text-align: left;
-  font-size: 1rem;
+  font-size: 0.85rem;
+  margin-left: 1rem;
 `;
 const LogOutText = styled(LogInText)``;
 

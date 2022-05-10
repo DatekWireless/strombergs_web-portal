@@ -12,7 +12,9 @@ export const AdminsSlice = createSlice({
       state.admins = [...state.admins, action.payload];
     },
     deleteAdmin: (state, action) => {
-      state.admins.splice(action.payload);
+      state.admins = state.admins.filter(
+        (admin, index) => index !== action.payload
+      );
     },
   },
 });

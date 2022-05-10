@@ -4,7 +4,7 @@ import { colors } from "../styles/variables";
 import { Tooltip } from "@chakra-ui/react";
 import { ReactComponent as MainLogo } from "../assets/images/Logo.svg";
 import { ReactComponent as MenuProfile } from "../assets/icons/MenuProfile.svg";
-const Topbar = () => {
+const Topbar = ({ isLogged }) => {
   const nameLoggedIn = "Magnus";
   return (
     <TopbarContainer>
@@ -18,7 +18,7 @@ const Topbar = () => {
           </Header>
         </HeaderContainer>
         <ProfileContainer>
-          <Tooltip hasArrow label="pålogget">
+          <Tooltip hasArrow label={isLogged ? "pålogget" : "ikke pålogget"}>
             <ProfileContainerText>{nameLoggedIn}</ProfileContainerText>
           </Tooltip>
           <MenuProfile />

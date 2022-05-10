@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
@@ -29,9 +29,12 @@ import {
 const Admins = () => {
   const admins = useSelector((state) => state.adminsReducer.admins);
   const dispatch = useDispatch();
+  const AdminNameInputRef = useRef();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const [adminData, setAdminData] = useState({ name: "" });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -39,15 +42,14 @@ const Admins = () => {
   const handleShowRepeatPassword = () =>
     setShowRepeatPassword(!showRepeatPassword);
 
-  const inputNameHandler = (event) => {
-    setAdminData({
-      name: event.target.value,
-    });
-  };
   const saveAdminHandler = () => {
+    const adminData = AdminNameInputRef.current.value;
     dispatch(addAdmin(adminData));
-    setAdminData({ name: "" });
     onClose();
+  };
+
+  const deleteAdminHandler = (id) => {
+    dispatch(deleteAdmin(id));
   };
 
   return (
@@ -61,7 +63,12 @@ const Admins = () => {
         </AddUnit>
         <StackAdmins spacing={2}>
           {admins.map((admin, index) => (
-            <Admin name={admin.name} key={index} />
+            <Admin
+              deleteAdmin={(id) => deleteAdminHandler(id)}
+              id={index}
+              name={admin}
+              key={index}
+            />
           ))}
         </StackAdmins>
       </Content>
@@ -84,8 +91,7 @@ const Admins = () => {
                   variant="filled"
                   type="text"
                   placeholder="Navn"
-                  value={adminData.name}
-                  onChange={(event) => inputNameHandler(event)}
+                  ref={AdminNameInputRef}
                 />
               </Stack>
               <Stack spacing={1}>

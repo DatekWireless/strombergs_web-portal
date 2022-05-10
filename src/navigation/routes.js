@@ -36,7 +36,7 @@ export const routes = [
   },
   {
     path: [paths.profile],
-    component: () => <Profile />,
+    component: ({ signOut }) => <Profile signOut={signOut} />,
   },
   {
     path: [paths.adminDetails],
@@ -49,7 +49,7 @@ export const routes = [
   },
 ];
 
-const Routes = () => {
+const Routes = ({ ...props }) => {
   return (
     <>
       <Switch>
@@ -58,7 +58,7 @@ const Routes = () => {
             key={index}
             path={route.path}
             exact={route.exact}
-            children={<route.component />}
+            children={<route.component {...props} />}
           />
         ))}
       </Switch>

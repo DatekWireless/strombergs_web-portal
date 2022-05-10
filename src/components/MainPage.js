@@ -3,16 +3,14 @@ import styled from "styled-components";
 import Routes from "../navigation/Routes";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import LogIn from "../components/LogIn";
 
-const MainPage = () => {
-  const loggedIn = true;
+const MainPage = ({ signOut, isLogged }) => {
   return (
     <PageWrapper>
-      <Topbar />
+      <Topbar isLogged={isLogged} />
       <MainView>
         <Sidebar />
-        {loggedIn ? <Routes /> : <LogIn />}
+        <Routes signOut={signOut} />
       </MainView>
     </PageWrapper>
   );
