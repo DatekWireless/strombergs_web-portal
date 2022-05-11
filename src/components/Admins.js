@@ -33,7 +33,6 @@ const Admins = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-  const [adminData, setAdminData] = useState({ name: "" });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 

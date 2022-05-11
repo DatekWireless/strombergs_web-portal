@@ -12,11 +12,11 @@ import "@aws-amplify/ui-react/styles.css";
 Amplify.configure(awsExports);
 
 function App() {
-  // let AWStoken = "";
+  let AWStoken = "";
 
   useEffect(() => {
     getToken();
-  });
+  }, []);
 
   const getToken = async () => {
     var data = await Auth.currentSession();

@@ -4,19 +4,16 @@ const initialState = {
   units: [],
 };
 
-export const AdminsSlice = createSlice({
+export const UnitsSlice = createSlice({
   name: "units",
   initialState: initialState,
   reducers: {
     addUnit: (state, action) => {
       state.units = [...state.units, action.payload];
     },
-    deleteUnit: (state, action) => {
-      state.admins.splice(action.payload);
-    },
   },
 });
 
-export const { addAdmin, deleteAdmin } = AdminsSlice.actions;
+export const { addUnit } = UnitsSlice.actions;
 
-export default AdminsSlice.reducer;
+export default UnitsSlice.reducer;

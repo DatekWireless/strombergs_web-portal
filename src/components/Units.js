@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
+import { useSelector, useDispatch } from "react-redux";
+import { addUnit } from "../features/UnitSlice";
 import {
   Table,
   Thead,
@@ -39,53 +41,40 @@ import {
 
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
 const Users = () => {
+  const units = useSelector((state) => state.unitsReducer.units);
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { url } = useRouteMatch();
   const [value, setValue] = useState("1");
-  const [units, setUnits] = useState([
-    {
-      owner: "XXL",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: true,
-      id: 1,
-    },
-    {
-      owner: "Coop Mega",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: true,
-      id: 2,
-    },
-    {
-      owner: "Frogner Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: false,
-      id: 3,
-    },
-    {
-      owner: "Bygdøy Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: false,
-      id: 4,
-    },
-    {
-      owner: "Majorstuen Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: false,
-      id: 5,
-    },
-    {
-      owner: "Hasle Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: true,
-      id: 6,
-    },
-  ]);
+
+  const OwnerInputRef = useRef();
+  const StreetInputRef = useRef();
+  const StreetNumberInputRef = useRef();
+  const StatusRadioRef = useRef();
+  const isWorkingInputRef = useRef();
+  const isNotWorkingInputRef = useRef();
+
+  const createUnitHandler = () => {
+    let unit = {
+      owner: "",
+      streetName: "",
+      streetNumber: null,
+      status: null,
+      isWorking: null,
+      isNotWorking: null,
+    };
+    unit = {
+      owner: OwnerInputRef.current.value,
+      streetName: StreetInputRef.current.value,
+      steetNumber: StreetNumberInputRef.current.value,
+      isWorking: isWorkingInputRef.current.checked,
+      isNotWorking: isNotWorkingInputRef.current.checked,
+    };
+    dispatch(addUnit(unit));
+    console.log(unit);
+    onClose();
+  };
+
   return (
     <Wrapper>
       <Content>
@@ -114,6 +103,7 @@ const Users = () => {
                     focusBorderColor="teal.400"
                     variant="filled"
                     placeholder="oppgi eier"
+                    ref={OwnerInputRef}
                   />
                 </Stack>
                 <HStack>
@@ -125,19 +115,26 @@ const Users = () => {
                       placeholder="oppgi gatenavn"
                       htmlSize={32}
                       width="auto"
+                      ref={StreetInputRef}
                     />
                   </Stack>
                   <Stack spacing={1}>
                     <Text fontSize="xs">Nummer</Text>
-                    <Input variant="filled" htmlSize={4} width="auto" />
+                    <Input
+                      variant="filled"
+                      htmlSize={4}
+                      width="auto"
+                      ref={StreetNumberInputRef}
+                    />
                   </Stack>
                 </HStack>
 
-                <RadioGroup onChange={setValue} value={value}>
+                <RadioGroup defaultValue="2">
                   <Stack spacing={6} direction="row">
                     <Radio
                       colorScheme="teal"
                       style={{ border: "1px solid lightgrey" }}
+                      ref={isWorkingInputRef}
                       value="1"
                     >
                       i drift
@@ -145,6 +142,7 @@ const Users = () => {
                     <Radio
                       colorScheme="teal"
                       style={{ border: "1px solid lightgrey" }}
+                      ref={isNotWorkingInputRef}
                       value="2"
                     >
                       ikke i drift
@@ -157,7 +155,9 @@ const Users = () => {
               <Button colorScheme="teal" mr={3} onClick={onClose}>
                 Lukk
               </Button>
-              <Button variant="ghost">Lagre</Button>
+              <Button variant="ghost" onClick={createUnitHandler}>
+                Lagre
+              </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
@@ -175,17 +175,17 @@ const Users = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {units.map((unit) => (
-                <Tr key={unit.id}>
+              {units.map((unit, index) => (
+                <Tr key={index}>
                   <Td>
                     <OwnerLink exact="true" to={`${url}/${unit.owner}`}>
                       {unit.owner}
                     </OwnerLink>
                   </Td>
-                  <Td>{unit.street}</Td>
-                  <Td>{unit.postcode}</Td>
+                  <Td>{unit.streetName}</Td>
+                  <Td>{unit.steetNumber}</Td>
                   <Td>
-                    {unit.inUse ? (
+                    {unit.isWorking ? (
                       <Badge colorScheme="green">i drift</Badge>
                     ) : (
                       <Badge colorScheme="red">ikke i drift</Badge>
