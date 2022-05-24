@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialAdminsState = {
   admins: [],
 };
 
 export const AdminsSlice = createSlice({
   name: "admins",
-  initialState: initialState,
+  initialState: initialAdminsState,
   reducers: {
     addAdmin: (state, action) => {
-      state.admins = [...state.admins, action.payload];
+      state.admins.push(action.payload);
     },
     deleteAdmin: (state, action) => {
       state.admins = state.admins.filter(

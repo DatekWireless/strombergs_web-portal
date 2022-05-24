@@ -3,7 +3,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import { useSelector, useDispatch } from "react-redux";
-import { addUnit } from "../features/UnitSlice";
+import { addUnit } from "../features/UnitsSlice.js";
 import {
   Table,
   Thead,
@@ -45,7 +45,6 @@ const Users = () => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { url } = useRouteMatch();
-  const [value, setValue] = useState("1");
 
   const OwnerInputRef = useRef();
   const StreetInputRef = useRef();
@@ -59,7 +58,6 @@ const Users = () => {
       owner: "",
       streetName: "",
       streetNumber: null,
-      status: null,
       isWorking: null,
       isNotWorking: null,
     };
@@ -71,7 +69,6 @@ const Users = () => {
       isNotWorking: isNotWorkingInputRef.current.checked,
     };
     dispatch(addUnit(unit));
-    console.log(unit);
     onClose();
   };
 

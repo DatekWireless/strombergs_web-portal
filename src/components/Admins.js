@@ -63,7 +63,7 @@ const Admins = () => {
         <StackAdmins spacing={2}>
           {admins.map((admin, index) => (
             <Admin
-              deleteAdmin={(id) => deleteAdminHandler(id)}
+              deleteAdmin={deleteAdminHandler}
               id={index}
               name={admin}
               key={index}

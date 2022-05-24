@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialUnitsState = {
   units: [],
 };
 
 export const UnitsSlice = createSlice({
   name: "units",
-  initialState: initialState,
+  initialState: initialUnitsState,
   reducers: {
     addUnit: (state, action) => {
       state.units = [...state.units, action.payload];

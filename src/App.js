@@ -1,26 +1,30 @@
 import React, { useEffect } from "react";
 import { Reset } from "styled-reset";
 import { BrowserRouter as Router } from "react-router-dom";
-import MainPage from "./components/MainPage";
-
+import { useSelector, useDispatch } from "react-redux";
+import { logOut } from "./features/AuthenticationSlice";
 import { Amplify, Auth } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./aws-exports";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import MainPage from "./components/MainPage";
 
 Amplify.configure(awsExports);
 
 function App() {
-  let AWStoken = "";
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getToken();
+    const isLogged = getToken();
+    dispatch(logOut(!!isLogged));
   }, []);
 
   const getToken = async () => {
-    var data = await Auth.currentSession();
-    console.log(data);
+    let data = await Auth.currentSession();
+    if (data) {
+      return data;
+    }
   };
 
   return (

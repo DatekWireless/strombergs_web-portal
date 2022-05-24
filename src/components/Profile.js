@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import { paths } from "../navigation/paths";
-
+import { useSelector } from "react-redux";
 import { ReactComponent as LogInIcon } from "../assets/icons/LogIn.svg";
 import { ReactComponent as LogOutIcon } from "../assets/icons/LogOut.svg";
 const Profile = ({ signOut }) => {
-  console.log(signOut);
+  const isLoggedIn = useSelector(
+    (state) => state.authenticationReducer.authentication
+  );
   return (
     <Wrapper>
       <Content>
@@ -17,10 +19,13 @@ const Profile = ({ signOut }) => {
           <Navn>Magnus Johanssen</Navn>
           <Epost>magnus@test.no</Epost>
           <LogContainer>
-            <LogIn>
-              <LogInIcon />
-              <LogInText>Logg inn</LogInText>
-            </LogIn>
+            {isLoggedIn && (
+              <LogIn>
+                <LogInIcon />
+                <LogInText>Logg inn</LogInText>
+              </LogIn>
+            )}
+
             <LogOut>
               <LogOutIcon />
               <LogOutText onClick={signOut}>Logg ut</LogOutText>
