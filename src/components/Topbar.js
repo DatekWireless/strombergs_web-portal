@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import { colors } from "../styles/variables";
 import { Tooltip } from "@chakra-ui/react";
 import { ReactComponent as MainLogo } from "../assets/images/Logo.svg";
 import { ReactComponent as MenuProfile } from "../assets/icons/MenuProfile.svg";
-const Topbar = ({ isLogged }) => {
-  const nameLoggedIn = "Magnus";
+const Topbar = () => {
+  const isLogged = useSelector(
+    (state) => (state) => state.authenticationReducer.authentication
+  );
   return (
     <TopbarContainer>
       <LogoContainer>
@@ -19,7 +22,7 @@ const Topbar = ({ isLogged }) => {
         </HeaderContainer>
         <ProfileContainer>
           <Tooltip hasArrow label={isLogged ? "pålogget" : "ikke pålogget"}>
-            <ProfileContainerText>{nameLoggedIn}</ProfileContainerText>
+            <ProfileContainerText>{"Filip"}</ProfileContainerText>
           </Tooltip>
           <MenuProfile />
         </ProfileContainer>
