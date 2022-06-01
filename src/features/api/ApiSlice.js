@@ -15,7 +15,6 @@ export const adminsApi = createApi({
   endpoints: (builder) => ({
     admins: builder.query({
       query: () => "administrators",
-      validateStatus: (response) => console.log(response),
     }),
   }),
 });

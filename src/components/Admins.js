@@ -58,7 +58,6 @@ const Admins = () => {
     <Wrapper>
       <Content>
         <Title>Administratorer</Title>
-        {console.log(data)}
         <BreakingLine />
         <AddUnit onClick={onOpen} variant="subtle" size="md" colorScheme="cyan">
           <TagLabel>Opprett en ny administratør</TagLabel>
