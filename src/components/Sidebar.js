@@ -18,7 +18,7 @@ const Sidebar = () => {
               color: `${colors.greenLight}`,
               transition: "all 0.1s linear",
             }}
-            to={paths.home}
+            to={"/home/main"}
             exact
           >
             <IconHome />
@@ -31,7 +31,7 @@ const Sidebar = () => {
               color: `${colors.greenLight}`,
               transition: "all 0.1s linear",
             }}
-            to={paths.admins}
+           to="/home/administratorer"
           >
             <IconAdmins />
             <p>Adminitratorer</p>
@@ -43,7 +43,7 @@ const Sidebar = () => {
               color: `${colors.greenLight}`,
               transition: "all 0.1s linear",
             }}
-            to={paths.users}
+            to={'/home/brukere'}
           >
             <IconUsers />
             <p>Brukere</p>
@@ -55,7 +55,7 @@ const Sidebar = () => {
               color: `${colors.greenLight}`,
               transition: "all 0.1s linear",
             }}
-            to={paths.units}
+            to={'/home/enheter'}
           >
             <IconUnits />
             <p>Enheter</p>
@@ -67,7 +67,7 @@ const Sidebar = () => {
               color: `${colors.greenLight}`,
               transition: "all 0.1s linear",
             }}
-            to={paths.profile}
+            to={'/home/profil'}
           >
             <IconProfile />
             <p>Profil</p>

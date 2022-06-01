@@ -1,14 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const adminsApi = createApi({
-  baseQuery: fetchBaseQuery(
-    "https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/"
-  ),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/",
+    prepareHeaders: (headers, { getState }) => {
+      const token = localStorage.getItem("API_token");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+
   endpoints: (builder) => ({
-    getAdmins: builder.query({
+    admins: builder.query({
       query: () => "administrators",
+      validateStatus: (response) => console.log(response),
     }),
   }),
 });
 
-export const { useGetAdminsQuery } = adminsApi;
+export const { useAdminsQuery } = adminsApi;

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { ReactComponent as LogInIcon } from "../assets/icons/LogIn.svg";
 import { ReactComponent as LogOutIcon } from "../assets/icons/LogOut.svg";
 const Profile = ({ signOut }) => {
-  const isLogged = useSelector(
+  const isLoggedIn = useSelector(
     (state) => state.authenticationReducer.authentication
   );
   return (
@@ -19,13 +19,12 @@ const Profile = ({ signOut }) => {
           <Navn>Magnus Johanssen</Navn>
           <Epost>magnus@test.no</Epost>
           <LogContainer>
-            {isLogged && (
+            {isLoggedIn && (
               <LogIn>
                 <LogInIcon />
                 <LogInText>Logg inn</LogInText>
               </LogIn>
             )}
-
             <LogOut>
               <LogOutIcon />
               <LogOutText onClick={signOut}>Logg ut</LogOutText>

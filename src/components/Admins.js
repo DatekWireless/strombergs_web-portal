@@ -25,8 +25,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useAdminsQuery } from "../../src/features/api/ApiSlice";
 
 const Admins = () => {
+  const { data, error, isLoading, isFetching, isSuccess } = useAdminsQuery();
+
   const admins = useSelector((state) => state.adminsReducer.admins);
   const dispatch = useDispatch();
   const AdminNameInputRef = useRef();
@@ -55,6 +58,7 @@ const Admins = () => {
     <Wrapper>
       <Content>
         <Title>Administratorer</Title>
+        {console.log(data)}
         <BreakingLine />
         <AddUnit onClick={onOpen} variant="subtle" size="md" colorScheme="cyan">
           <TagLabel>Opprett en ny administratør</TagLabel>

@@ -8,12 +8,12 @@ export const AuthenticationSlice = createSlice({
   name: "authentication",
   initialState: initialAuthenticationState,
   reducers: {
-    logOut: (state, action) => {
+    logging: (state, action) => {
       state.isAuthenticated = action.payload;
     },
   },
 });
 
-export const { logOut } = AuthenticationSlice.actions;
+export const { logging } = AuthenticationSlice.actions;
 
 export default AuthenticationSlice.reducer;

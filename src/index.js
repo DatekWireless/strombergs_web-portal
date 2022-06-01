@@ -7,6 +7,8 @@ import theme from "../src/styles/theme";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 
+import "@aws-amplify/ui-react/styles.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyles />
