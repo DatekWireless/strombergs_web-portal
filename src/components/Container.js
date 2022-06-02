@@ -5,12 +5,12 @@ import { Link, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as Delete } from "../assets/icons/Delete.svg";
 import { ReactComponent as Edit } from "../assets/icons/Edit.svg";
-const Container = ({ type }) => {
+const Container = ({ fraction, containerId }) => {
   let { url } = useRouteMatch();
   return (
-    <UserContainer to={`${url}/${type}`}>
+    <UserContainer to={`${url}/${containerId}`}>
       <LinkContainer>
-        <UserName>{type}</UserName>
+        <UserName>{fraction}</UserName>
       </LinkContainer>
       <IconsWrapper>
         <IconConatiner>

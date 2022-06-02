@@ -17,18 +17,20 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-const Admin = ({ name, id, userID, isLogged, deleteAdmin }) => {
+const Admin = ({ name, id, userID, isLogged,  deleteAdminHandler, admin }) => {
   const { url } = useRouteMatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const confirmDeletingAdminHandler = (id) => {
-    deleteAdmin(id);
+
+    deleteAdminHandler(id);
     onClose();
   };
+
   const adminId = id;
   return (
     <div>
       <AdminContainer>
-        <LinkContainer exact="true" to={`${url}/${userID}`}>
+        <LinkContainer exact="true" to={`${url}/${admin.Id}`}>
           <UserName>{name}</UserName>
           {isLogged ? (
             <Badge colorScheme="green" variant="subtle">
@@ -62,7 +64,7 @@ const Admin = ({ name, id, userID, isLogged, deleteAdmin }) => {
               colorScheme="teal"
               variant="solid"
               mr={3}
-              onClick={() => confirmDeletingAdminHandler(adminId)}
+              onClick={() => confirmDeletingAdminHandler(admin.Id)}
             >
               Ja
             </Button>
@@ -80,7 +82,7 @@ const AdminContainer = styled.div`
   padding: 0.25rem;
   width: 30rem;
   border-radius: 5px;
-  border: 2px solid ${colors.greenPale};
+  border: 2px solid ${colors.greenDark};
   display: flex;
   align-items: center;
   justify-content: space-between;

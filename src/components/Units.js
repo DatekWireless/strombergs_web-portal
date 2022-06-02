@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import { useSelector, useDispatch } from "react-redux";
-import { addUnit } from "../features/UnitsSlice.js";
+import { addUnit, updateUnit } from "../features/UnitsSlice.js";
 import {
   Table,
   Thead,
@@ -37,9 +37,12 @@ import {
   Radio,
   RadioGroup,
   FormControl,
+  Spinner,
 } from "@chakra-ui/react";
-
+import Unit from "./Unit";
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
+import axios from "axios";
+
 const Users = () => {
   const units = useSelector((state) => state.unitsReducer.units);
   const dispatch = useDispatch();
@@ -49,27 +52,68 @@ const Users = () => {
   const OwnerInputRef = useRef();
   const StreetInputRef = useRef();
   const StreetNumberInputRef = useRef();
-  const StatusRadioRef = useRef();
   const isWorkingInputRef = useRef();
-  const isNotWorkingInputRef = useRef();
+
+  const token = localStorage.getItem("API_token");
+
+  let headers = {
+    authorization: `Bearer ${token}`,
+  };
+  useEffect(() => {
+    axios
+      .get(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        dispatch(updateUnit(res.data));
+      });
+  }, []);
 
   const createUnitHandler = () => {
     let unit = {
-      owner: "",
-      streetName: "",
-      streetNumber: null,
-      isWorking: null,
-      isNotWorking: null,
+      Owner: "",
+      StreetName: "",
+      StreetNumber: null,
+      Active: false,
     };
     unit = {
-      owner: OwnerInputRef.current.value,
-      streetName: StreetInputRef.current.value,
-      steetNumber: StreetNumberInputRef.current.value,
-      isWorking: isWorkingInputRef.current.checked,
-      isNotWorking: isNotWorkingInputRef.current.checked,
+      Owner: OwnerInputRef.current.value,
+      StreetName: StreetInputRef.current.value,
+      StreetNumber: StreetNumberInputRef.current.value,
+      Active: isWorkingInputRef.current.checked ? true : false,
     };
-    dispatch(addUnit(unit));
+
+    axios
+      .post(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`,
+        unit,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(addUnit(unit));
+        }
+      });
+
     onClose();
+  };
+
+  const deleteUnitHandler = (id) => {
+    axios
+      .delete(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${id}`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        dispatch(updateUnit(units.filter((unit) => unit.Id !== id)));
+      });
   };
 
   return (
@@ -136,14 +180,6 @@ const Users = () => {
                     >
                       i drift
                     </Radio>
-                    <Radio
-                      colorScheme="teal"
-                      style={{ border: "1px solid lightgrey" }}
-                      ref={isNotWorkingInputRef}
-                      value="2"
-                    >
-                      ikke i drift
-                    </Radio>
                   </Stack>
                 </RadioGroup>
               </Stack>
@@ -169,26 +205,21 @@ const Users = () => {
                 <Th>Gatenavn</Th>
                 <Th>Nummer</Th>
                 <Th>Status</Th>
+                <Th>Slett</Th>
               </Tr>
             </Thead>
             <Tbody>
               {units.map((unit, index) => (
-                <Tr key={index}>
-                  <Td>
-                    <OwnerLink exact="true" to={`${url}/${unit.owner}`}>
-                      {unit.owner}
-                    </OwnerLink>
-                  </Td>
-                  <Td>{unit.streetName}</Td>
-                  <Td>{unit.steetNumber}</Td>
-                  <Td>
-                    {unit.isWorking ? (
-                      <Badge colorScheme="green">i drift</Badge>
-                    ) : (
-                      <Badge colorScheme="red">ikke i drift</Badge>
-                    )}
-                  </Td>
-                </Tr>
+                <Unit
+                  id={unit.Id}
+                  key={index}
+                  url={url}
+                  owner={unit.Owner}
+                  streetName={unit.StreetName}
+                  streetNumber={unit.StreetNumber}
+                  active={unit.Active}
+                  deleteUnit={deleteUnitHandler}
+                />
               ))}
             </Tbody>
           </Table>
@@ -234,13 +265,6 @@ const AddUnit = styled(Tag)`
 
 const TableMainContainer = styled(TableContainer)`
   margin-top: 3rem;
-`;
-const OwnerLink = styled(Link)`
-  position: relative;
-  padding: 0.15rem;
-  &:hover {
-    border-bottom: 3px solid ${colors.greenLight};
-  }
 `;
 
 export default Users;

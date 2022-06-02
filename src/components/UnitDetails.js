@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
@@ -28,9 +28,67 @@ import Container from "./Container";
 import ContainerDetails from "../components/ContainerDetails";
 import UnitInfo from "./UnitInfo";
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
-const UnitDetails = () => {
+import axios from "axios";
+const UnitDetails = ({ unitId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let { path, url } = useRouteMatch();
+
+  const [ containers, setContainers ] = useState([]);
+
+  const token = localStorage.getItem("API_token");
+  let headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  useEffect(() => {
+    axios.get(
+      `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${unitId}`,
+      {
+        headers: headers,
+      }
+    );
+
+    axios
+      .get(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/containers`,
+        {
+          headers: headers,
+        }
+      )
+      .then(res => {
+        setContainers(res.data)
+      })
+  }, []);
+
+  const TypeInputRef = useRef();
+  const InsertionTypeInputRef = useRef();
+  const StartInputRef = useRef();
+  const SizeInputRef = useRef();
+
+  const createContainerHandler = () => {
+    let container = {
+      Fraction: " ",
+      Type: "",
+      Startup: "",
+      Size: "",
+    };
+
+    container = {
+      Fraction: TypeInputRef.current.value,
+      Type: InsertionTypeInputRef.current.value,
+      Startup: StartInputRef.current.value,
+      Size: SizeInputRef.current.value,
+    };
+    axios.post(
+      `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/containers`,
+      container,
+      {
+        headers: headers,
+      }
+    );
+    onClose();
+  };
+
   return (
     <AdminInfoContainer>
       <Content>
@@ -55,10 +113,9 @@ const UnitDetails = () => {
               </AddContainer>
               <ContainersData>
                 <Containers>
-                  <Container type="Matavfall" />
-                  <Container type="Matavfall" />
-                  <Container type="Plast" />
-                  <Container type="Glass og metal" />
+                  {containers && containers.map((container, index) => (
+                    <Container key={index} fraction={container.Fraction} containerId={container.Id}/>
+                  ))}
                 </Containers>
                 <Switch>
                   <Route
@@ -90,6 +147,7 @@ const UnitDetails = () => {
                   focusBorderColor="teal.400"
                   variant="filled"
                   placeholder="oppgi fraksjon"
+                  ref={TypeInputRef}
                 />
               </Stack>
               <Stack spacing={1}>
@@ -98,6 +156,7 @@ const UnitDetails = () => {
                   focusBorderColor="teal.400"
                   variant="filled"
                   placeholder="oppgi innkasttype"
+                  ref={InsertionTypeInputRef}
                 />
               </Stack>
               <Stack spacing={1}>
@@ -106,6 +165,16 @@ const UnitDetails = () => {
                   focusBorderColor="teal.400"
                   variant="filled"
                   placeholder="oppgi oppastart av drift"
+                  ref={StartInputRef}
+                />
+              </Stack>
+              <Stack spacing={1}>
+                <Text fontSize="xs">Størelse</Text>
+                <Input
+                  focusBorderColor="teal.400"
+                  variant="filled"
+                  placeholder="oppgi størelse"
+                  ref={SizeInputRef}
                 />
               </Stack>
             </Stack>
@@ -114,7 +183,9 @@ const UnitDetails = () => {
             <Button colorScheme="teal" mr={3} onClick={onClose}>
               Lukk
             </Button>
-            <Button variant="ghost">Lagre</Button>
+            <Button onClick={createContainerHandler} variant="ghost">
+              Lagre
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

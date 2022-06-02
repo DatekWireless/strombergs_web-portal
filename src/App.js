@@ -61,7 +61,7 @@ const AuthEl = styled(Authenticator)`
   button.amplify-field__show-password {
     background-color: white;
     &:focus {
-      border: 2px solid ${colors.greenMain};
+      border: 1px solid ${colors.greenMain};
       box-shadow: none;
     }
   }
@@ -69,7 +69,7 @@ const AuthEl = styled(Authenticator)`
     background-color: ${colors.greenPale};
   }
   .amplify-input:focus {
-    border: 2px solid ${colors.greenMain};
+    border: 1px solid ${colors.greenMain};
     box-shadow: none;
   }
 `;

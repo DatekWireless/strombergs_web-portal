@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
@@ -24,57 +24,70 @@ import {
   InputRightElement,
   Stack,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { useAdminsQuery } from "../../src/features/api/ApiSlice";
-
+import { ComponentPropsToStylePropsMap } from "@aws-amplify/ui-react";
+import axios from "axios";
 const Admins = () => {
   const { data, error, isLoading, isFetching, isSuccess } = useAdminsQuery();
 
-  const admins = useSelector((state) => state.adminsReducer.admins);
+  const [adminsList, setAdminsList] = useState("Initial State");
+
+  useEffect(() => {
+    if (isSuccess) {
+      data.length === 0 ? setAdminsList("Error") : setAdminsList(data);
+    }
+  }, [useAdminsQuery()]);
+
   const dispatch = useDispatch();
-  const AdminNameInputRef = useRef();
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleShowPassword = () => setShowPassword(!showPassword);
-
-  const handleShowRepeatPassword = () =>
-    setShowRepeatPassword(!showRepeatPassword);
-
-  const saveAdminHandler = () => {
-    const adminData = AdminNameInputRef.current.value;
-    dispatch(addAdmin(adminData));
-    onClose();
-  };
 
   const deleteAdminHandler = (id) => {
-    dispatch(deleteAdmin(id));
+    console.log("DeleteAdminHandlerID", id);
+    // dispatch(deleteAdmin(id));
+
+    const token = localStorage.getItem("API_token");
+    console.log(token);
+
+    let headers = {
+      authorization: `Bearer ${token}`,
+    };
+
+    axios
+      .delete(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/administrators/${id}`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          setAdminsList(adminsList.filter((admin) => admin.Id !== id));
+        }
+      });
   };
 
   return (
     <Wrapper>
       <Content>
         <Title>Administratorer</Title>
-        <BreakingLine />
-        <AddUnit onClick={onOpen} variant="subtle" size="md" colorScheme="cyan">
-          <TagLabel>Opprett en ny administratør</TagLabel>
-          <TagRightIcon boxSize="12px" as={Add} />
-        </AddUnit>
-        <StackAdmins spacing={2}>
-          {admins.map((admin, index) => (
-            <Admin
-              deleteAdmin={(id) => deleteAdminHandler(id)}
-              id={index}
-              name={admin}
-              key={index}
-            />
-          ))}
-        </StackAdmins>
+        {adminsList === "Initial State" ? (
+          <Spinner size="lg" color={colors.greenMain}/>
+        ) : (
+          <StackAdmins spacing={2}>
+            {adminsList !== "Error" &&
+              adminsList.map((admin, index) => (
+                <Admin
+                  deleteAdminHandler={deleteAdminHandler}
+                  name={admin.Email}
+                  key={index}
+                  admin={admin}
+                />
+              ))}
+          </StackAdmins>
+        )}
       </Content>
-      <Modal
+      {/* <Modal
         isCentered
         closeOnOverlayClick={false}
         isOpen={isOpen}
@@ -152,7 +165,7 @@ const Admins = () => {
             </Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </Wrapper>
   );
 };
@@ -182,15 +195,15 @@ const Title = styled.h1`
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
 `;
-const AddUnit = styled(Tag)`
-  margin-top: 2rem;
-  cursor: pointer;
-  border: 2px solid white;
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    border: 2px solid #69b1bf;
-  }
-`;
+// const AddUnit = styled(Tag)`
+//   margin-top: 2rem;
+//   cursor: pointer;
+//   border: 2px solid white;
+//   transition: all 0.2s ease-in-out;
+//   &:hover {
+//     border: 2px solid #69b1bf;
+//   }
+// `;
 
 const StackAdmins = styled(Stack)`
   margin-top: 1.25rem;

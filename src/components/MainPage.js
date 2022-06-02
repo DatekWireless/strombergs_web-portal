@@ -15,10 +15,14 @@ import awsExports from "../aws-exports";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../features/AuthenticationSlice";
 import { Amplify, Auth } from "aws-amplify";
+import { useAdminsQuery } from "../../src/features/api/ApiSlice";
+import AdminDetails from "./AdminDetails";
+import UnitDetails from "./UnitDetails";
 Amplify.configure(awsExports);
 
 const MainPage = ({ signOut, isLogged }) => {
-  let { param } = useParams();
+  let { param, id } = useParams();
+ 
 
   const signOutHandler = () => {
     signOut();
@@ -30,12 +34,24 @@ const MainPage = ({ signOut, isLogged }) => {
       <MainView>
         <Sidebar />
 
+        {
+        id === undefined && <>
         {param === undefined && <Home />}
         {param === "main" && <Home />}
-        {param === "administratorer" && <Admins />}
+        {param === "administratorer"  && <Admins  /> }
         {param === "brukere" && <Users />}
         {param === "enheter" && <Units />}
-        {param === "profil" && <Profile signOut={signOut} />}
+        {param === "profil" && <Profile signOut={signOutHandler} />}
+        </>  }
+
+        {
+          id && <>
+          {param === 'enheter' && id && <UnitDetails unitId={id}/> }
+         { param === 'administratorer' && id && <AdminDetails adminId={id}/> }
+          </>
+        }
+       
+      
       </MainView>
     </PageWrapper>
   );

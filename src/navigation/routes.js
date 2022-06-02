@@ -22,6 +22,11 @@ export const routes = [
     component: ({ signOut }) => <MainPage signOut={signOut} />,
   },
   {
+    path: "/home/:param/:id",
+    exact: true,
+    component: ({ signOut }) => <MainPage signOut={signOut} />,
+  },
+  {
     path: "*",
     exact: false,
     component: ({ signOut }) => <MainPage signOut={signOut} />,
@@ -30,14 +35,13 @@ export const routes = [
 
 const Routes = ({ ...props }) => {
  
-
   useEffect(async () => {
     const token = await getToken();
     localStorage.setItem("API_token", token.getIdToken().getJwtToken());
   }, []);
 
-  const getToken = async () => {
-    let data = await Auth.currentSession();
+  const getToken =  () => {
+    let data =  Auth.currentSession();
     if (data) {
       return data;
     }

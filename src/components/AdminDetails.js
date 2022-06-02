@@ -4,11 +4,11 @@ import { colors } from "../styles/variables";
 
 import { HStack, Stack, Text } from "@chakra-ui/react";
 
-const AdminDetails = () => {
+const AdminDetails = ({adminId}) => {
   return (
     <Wrapper>
       <Content>
-        <Title>Detaljer</Title> <BreakingLine />
+        <Title>Detaljer {adminId}</Title> <BreakingLine />
         <InfoBox>
           <Stack>
             <HStack>
