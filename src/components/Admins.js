@@ -71,6 +71,7 @@ const Admins = () => {
     <Wrapper>
       <Content>
         <Title>Administratorer</Title>
+        <BreakingLine />
         {adminsList === "Initial State" ? (
           <Spinner size="lg" color={colors.greenMain}/>
         ) : (
@@ -191,6 +192,7 @@ const Content = styled.div`
 const Title = styled.h1`
   font-weight: 600;
 `;
+
 
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
