@@ -23,7 +23,8 @@ function App() {
       <AuthEl>
         {({ signOut, user }) => (
           <Router>
-            <Routes signOut={signOut} />
+           
+            <Routes signOut={signOut} user={user} />
             <Reset />
           </Router>
         )}

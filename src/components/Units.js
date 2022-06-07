@@ -59,7 +59,8 @@ const Users = () => {
   let headers = {
     authorization: `Bearer ${token}`,
   };
-  useEffect(() => {
+
+  const getUnits = () => {
     axios
       .get(
         `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`,
@@ -70,6 +71,10 @@ const Users = () => {
       .then((res) => {
         dispatch(updateUnit(res.data));
       });
+  };
+
+  useEffect(() => {
+    getUnits();
   }, []);
 
   const createUnitHandler = () => {
@@ -96,7 +101,7 @@ const Users = () => {
       )
       .then((res) => {
         if (res.status === 200) {
-          dispatch(addUnit(unit));
+          getUnits();
         }
       });
 
@@ -170,18 +175,20 @@ const Users = () => {
                   </Stack>
                 </HStack>
 
-                <RadioGroup defaultValue="2">
-                  <Stack spacing={6} direction="row">
-                    <Radio
-                      colorScheme="teal"
-                      style={{ border: "1px solid lightgrey" }}
-                      ref={isWorkingInputRef}
-                      value="1"
-                    >
-                      i drift
-                    </Radio>
-                  </Stack>
-                </RadioGroup>
+                <Stack spacing={6} direction="row">
+                  <input
+                    onClick={() =>
+                      console.log(isWorkingInputRef.current.checked)
+                    }
+                    colorScheme="teal"
+                    style={{ border: "1px solid lightgrey" }}
+                    ref={isWorkingInputRef}
+                    type="checkbox"
+                  />
+                  <label>
+                    {isWorkingInputRef ? "I drafit" : "ikke i drift"}
+                  </label>
+                </Stack>
               </Stack>
             </ModalBody>
             <ModalFooter>

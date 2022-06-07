@@ -73,7 +73,9 @@ const Admins = () => {
         <Title>Administratorer</Title>
         <BreakingLine />
         {adminsList === "Initial State" ? (
-          <Spinner size="lg" color={colors.greenMain}/>
+          <SpinnerWrapper>
+            <Spinner size="lg" color={colors.greenMain} />
+          </SpinnerWrapper>
         ) : (
           <StackAdmins spacing={2}>
             {adminsList !== "Error" &&
@@ -193,20 +195,16 @@ const Title = styled.h1`
   font-weight: 600;
 `;
 
-
 const BreakingLine = styled.hr`
   border-top: 2px solid grey;
 `;
-// const AddUnit = styled(Tag)`
-//   margin-top: 2rem;
-//   cursor: pointer;
-//   border: 2px solid white;
-//   transition: all 0.2s ease-in-out;
-//   &:hover {
-//     border: 2px solid #69b1bf;
-//   }
-// `;
 
+const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 4rem;
+  padding-top: 1rem;
+  justify-content: center;
+`;
 const StackAdmins = styled(Stack)`
   margin-top: 1.25rem;
 `;

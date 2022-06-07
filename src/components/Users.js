@@ -13,63 +13,27 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import TableViewer from "react-js-table-with-csv-dl";
 
 const Users = () => {
+  let table = [
+    { number: 12, name: "Del Piero", position: "ST" },
+    { number: 21, name: "Pirlo", position: "MC" },
+    { number: 1, name: "Buffon", position: "GK" },
+  ];
+
   return (
     <Wrapper>
       <Content>
         <Title> Brukere</Title>
         <BreakingLine />
-        <TableMainContainer>
-          <Table variant="striped" size="sm" colorScheme={"teal"}>
-            <Thead>
-              <Tr>
-                <Th>Navn</Th>
-                <Th>Gatenavn</Th>
-                <Th>Nummer</Th>
-                <Th>Epost</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </TableMainContainer>
+        <TableViewer
+          content={table}
+          headers={["number", "name", "position"]}
+          minHeight={0}
+          maxHeight={400}
+          activateDownloadButton={true}
+        />
       </Content>
     </Wrapper>
   );

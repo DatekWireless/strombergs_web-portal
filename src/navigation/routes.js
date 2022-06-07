@@ -14,12 +14,13 @@ import MainPage from "../components/MainPage.js";
 import { useHistory } from "react-router-dom";
 import { Amplify, Auth } from "aws-amplify";
 
-
 export const routes = [
   {
     path: "/home/:param",
     exact: true,
-    component: ({ signOut }) => <MainPage signOut={signOut} />,
+    component: ({ signOut, user }) => (
+      <MainPage signOut={signOut} user={user} />
+    ),
   },
   {
     path: "/home/:param/:id",
@@ -34,14 +35,13 @@ export const routes = [
 ];
 
 const Routes = ({ ...props }) => {
- 
   useEffect(async () => {
     const token = await getToken();
     localStorage.setItem("API_token", token.getIdToken().getJwtToken());
   }, []);
 
-  const getToken =  () => {
-    let data =  Auth.currentSession();
+  const getToken = () => {
+    let data = Auth.currentSession();
     if (data) {
       return data;
     }

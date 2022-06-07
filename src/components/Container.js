@@ -8,7 +8,7 @@ import { ReactComponent as Edit } from "../assets/icons/Edit.svg";
 const Container = ({ fraction, containerId }) => {
   let { url } = useRouteMatch();
   return (
-    <UserContainer to={`${url}/${containerId}`}>
+    <UserContainer to={`/${url}/${containerId}`}>
       <LinkContainer>
         <UserName>{fraction}</UserName>
       </LinkContainer>

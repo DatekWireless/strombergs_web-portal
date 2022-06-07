@@ -29,25 +29,19 @@ import ContainerDetails from "../components/ContainerDetails";
 import UnitInfo from "./UnitInfo";
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
 import axios from "axios";
+import UnitsSlice from "../features/UnitsSlice";
 const UnitDetails = ({ unitId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let { path, url } = useRouteMatch();
 
-  const [ containers, setContainers ] = useState([]);
-
+  const [containers, setContainers] = useState([]);
+  const[units, setUnits] = useState([]);
   const token = localStorage.getItem("API_token");
   let headers = {
     authorization: `Bearer ${token}`,
   };
 
-  useEffect(() => {
-    axios.get(
-      `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${unitId}`,
-      {
-        headers: headers,
-      }
-    );
-
+  const fetchContainers = () => {
     axios
       .get(
         `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/containers`,
@@ -55,9 +49,27 @@ const UnitDetails = ({ unitId }) => {
           headers: headers,
         }
       )
-      .then(res => {
-        setContainers(res.data)
-      })
+      .then((res) => {
+        setContainers(res.data);
+      });
+  };
+
+  const fetchUnits = () => {
+    axios
+      .get(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${unitId}`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        setUnits(res.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchContainers();
+    fetchUnits();
   }, []);
 
   const TypeInputRef = useRef();
@@ -65,6 +77,13 @@ const UnitDetails = ({ unitId }) => {
   const StartInputRef = useRef();
   const SizeInputRef = useRef();
 
+  const changeUnitStatusHandler = (isActive) => {
+    axios.put(
+      `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`, {Active: isActive ? true : false}, {headers:headers}
+    ).then(res => {
+      res.status===200 && fetchUnits()
+    })
+  };
   const createContainerHandler = () => {
     let container = {
       Fraction: " ",
@@ -100,7 +119,10 @@ const UnitDetails = ({ unitId }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <UnitInfo />
+              <UnitInfo
+                units={units}
+                statusPutApi={changeUnitStatusHandler}
+              />
             </TabPanel>
             <TabPanel>
               <AddContainer
@@ -113,9 +135,14 @@ const UnitDetails = ({ unitId }) => {
               </AddContainer>
               <ContainersData>
                 <Containers>
-                  {containers && containers.map((container, index) => (
-                    <Container key={index} fraction={container.Fraction} containerId={container.Id}/>
-                  ))}
+                  {containers &&
+                    containers.map((container, index) => (
+                      <Container
+                        key={index}
+                        fraction={container.Fraction}
+                        containerId={container.Id}
+                      />
+                    ))}
                 </Containers>
                 <Switch>
                   <Route

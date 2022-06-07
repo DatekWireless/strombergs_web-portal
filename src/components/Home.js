@@ -8,10 +8,8 @@ import { ReactComponent as ForwardArrow } from "../assets/icons/ForwardArrow.svg
 
 import { useSelector, useDispatch } from "react-redux";
 
-
-
 const Home = () => {
-  /* const { url, path } = useRouteMatch; */
+  const { url, path } = useRouteMatch;
 
   return (
     <Wrapper>
@@ -21,28 +19,28 @@ const Home = () => {
         </Title>
         <CardsWrapper>
           <SectionCards>
-            <Card to={paths.admins}>
+            <Card to={"/home/administratorer"}>
               <CardHeaderWrapper>
                 <CardHeader>Se administratorers status</CardHeader>
               </CardHeaderWrapper>
             </Card>
-            <Card to={paths.users}>
+            <Card to={"/home/brukere"}>
               <CardHeaderWrapper>
                 <CardHeader>Se brukeres status</CardHeader>
               </CardHeaderWrapper>
             </Card>
-            <Card to={paths.units}>
+            <Card to={"/home/enheter"}>
               <CardHeaderWrapper>
                 <CardHeader>Se enheters status</CardHeader>
               </CardHeaderWrapper>
             </Card>
-            <Card to={paths.profile}>
+            <Card to={"/home/profil"}>
               <CardHeaderWrapper>
                 <CardHeader>Se profilen din</CardHeader>
               </CardHeaderWrapper>
             </Card>
           </SectionCards>
-          <AddUserCard to={`${paths.registration}`}>
+          <AddUserCard >
             <AddUserIcon />
             <AddUserText>Opprett en ny administrator</AddUserText>
           </AddUserCard>

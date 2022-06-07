@@ -17,11 +17,10 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-const Admin = ({ name, id, userID, isLogged,  deleteAdminHandler, admin }) => {
+const Admin = ({ name, id, userID, isLogged, deleteAdminHandler, admin }) => {
   const { url } = useRouteMatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const confirmDeletingAdminHandler = (id) => {
-
     deleteAdminHandler(id);
     onClose();
   };

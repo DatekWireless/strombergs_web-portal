@@ -5,7 +5,7 @@ import { colors } from "../styles/variables";
 import { Tooltip } from "@chakra-ui/react";
 import { ReactComponent as MainLogo } from "../assets/images/Logo.svg";
 import { ReactComponent as MenuProfile } from "../assets/icons/MenuProfile.svg";
-const Topbar = () => {
+const Topbar = ({user}) => {
   const isLogged = useSelector(
     (state) => (state) => state.authenticationReducer.authentication
   );
@@ -22,7 +22,7 @@ const Topbar = () => {
         </HeaderContainer>
         <ProfileContainer>
           <Tooltip hasArrow label={isLogged ? "pålogget" : "ikke pålogget"}>
-            <ProfileContainerText>{"Filip"}</ProfileContainerText>
+            <ProfileContainerText>{user?.attributes?.email}</ProfileContainerText>
           </Tooltip>
           <MenuProfile />
         </ProfileContainer>

@@ -10,6 +10,7 @@ import Home from "./Home";
 import Admins from "./Admins";
 import Users from "./Users";
 import Units from "./Units";
+import Breadcrumbs from "./Breadcrumbs";
 
 import awsExports from "../aws-exports";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,9 +21,8 @@ import AdminDetails from "./AdminDetails";
 import UnitDetails from "./UnitDetails";
 Amplify.configure(awsExports);
 
-const MainPage = ({ signOut, isLogged }) => {
+const MainPage = ({ signOut, isLogged, user }) => {
   let { param, id } = useParams();
- 
 
   const signOutHandler = () => {
     signOut();
@@ -30,28 +30,30 @@ const MainPage = ({ signOut, isLogged }) => {
   };
   return (
     <PageWrapper>
-      <Topbar isLogged={isLogged} />
+      <Topbar user={user} isLogged={isLogged} />
+
       <MainView>
         <Sidebar />
-
-        {
-        id === undefined && <>
-        {param === undefined && <Home />}
-        {param === "main" && <Home />}
-        {param === "administratorer"  && <Admins  /> }
-        {param === "brukere" && <Users />}
-        {param === "enheter" && <Units />}
-        {param === "profil" && <Profile signOut={signOutHandler} />}
-        </>  }
-
-        {
-          id && <>
-          {param === 'enheter' && id && <UnitDetails unitId={id}/> }
-         { param === 'administratorer' && id && <AdminDetails adminId={id}/> }
+        <Breadcrumbs />
+        {id === undefined && (
+          <>
+            {param === undefined && <Home />}
+            {param === "main" && <Home />}
+            {param === "administratorer" && <Admins />}
+            {param === "brukere" && <Users />}
+            {param === "enheter" && <Units />}
+            {param === "profil" && (
+              <Profile signOut={signOutHandler} user={user} />
+            )}
           </>
-        }
-       
-      
+        )}
+
+        {id && (
+          <>
+            {param === "enheter" && id && <UnitDetails unitId={id} />}
+            {param === "administratorer" && id && <AdminDetails adminId={id} />}
+          </>
+        )}
       </MainView>
     </PageWrapper>
   );

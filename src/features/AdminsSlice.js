@@ -26,7 +26,7 @@ export const AdminsSlice = createSlice({
      }).then(res => {
        if(res.status === 200){
         state.admins = state.admins.filter(admin => admin.Id !== action.payload)
-        console.log('Odpaliłem się')
+        
        }
      })
     

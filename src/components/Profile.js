@@ -6,7 +6,7 @@ import { paths } from "../navigation/paths";
 import { useSelector } from "react-redux";
 import { ReactComponent as LogInIcon } from "../assets/icons/LogIn.svg";
 import { ReactComponent as LogOutIcon } from "../assets/icons/LogOut.svg";
-const Profile = ({ signOut }) => {
+const Profile = ({ signOut, user }) => {
   const isLoggedIn = useSelector(
     (state) => state.authenticationReducer.authentication
   );
@@ -16,8 +16,11 @@ const Profile = ({ signOut }) => {
         <Title>Profil</Title>
         <BreakingLine />
         <ProfileContent>
-          <Navn>Magnus Johanssen</Navn>
-          <Epost>magnus@test.no</Epost>
+          <Id>Id: </Id>
+          <IdData>{user.username}</IdData>
+
+          <Epost>Epost: </Epost>
+          <Epost>{user.attributes.email}</Epost>
           <LogContainer>
             {isLoggedIn && (
               <LogIn>
@@ -64,11 +67,15 @@ const BreakingLine = styled.hr`
 const ProfileContent = styled.div`
   margin-top: 2.5rem;
 `;
-const Navn = styled.p`
+const Id = styled.p`
+  font-weight: 600;
+  font-size: 1rem;
+`;
+const IdData = styled.p`
   font-weight: 400;
   font-size: 1rem;
 `;
-const Epost = styled(Navn)``;
+const Epost = styled(Id)``;
 
 const LogContainer = styled.div`
   margin-top: 1rem;

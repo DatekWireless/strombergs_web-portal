@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import {
   Button,
@@ -18,12 +19,13 @@ import {
   createStandaloneToast,
 } from "@chakra-ui/react";
 
-const UnitInfo = () => {
+const UnitInfo = ({ units, statusPutApi }) => {
   const toast = createStandaloneToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [inOperation, setInOperation] = useState(false);
+  const [inOperation, setInOperation] = useState(units.Active);
 
   const changeStatusHandler = () => {
+    statusPutApi(!inOperation);
     setInOperation(!inOperation);
     onClose();
     toast({
@@ -39,7 +41,7 @@ const UnitInfo = () => {
   return (
     <>
       <InfoText>
-        <Span>Eier:</Span> Coop Mega AS
+        <Span>Eier:</Span> {units.Owner}
       </InfoText>
       <InfoText>
         <Span>Gatenavn:</Span> Hammerstads gate
