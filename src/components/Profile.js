@@ -16,11 +16,10 @@ const Profile = ({ signOut, user }) => {
         <Title>Profil</Title>
         <BreakingLine />
         <ProfileContent>
+          <Epost>Epost: </Epost>
+          <EpostData>{user.attributes.email}</EpostData>
           <Id>Id: </Id>
           <IdData>{user.username}</IdData>
-
-          <Epost>Epost: </Epost>
-          <Epost>{user.attributes.email}</Epost>
           <LogContainer>
             {isLoggedIn && (
               <LogIn>
@@ -76,7 +75,7 @@ const IdData = styled.p`
   font-size: 1rem;
 `;
 const Epost = styled(Id)``;
-
+const EpostData = styled(IdData)``;
 const LogContainer = styled.div`
   margin-top: 1rem;
   height: 5rem;

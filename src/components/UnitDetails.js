@@ -35,7 +35,7 @@ const UnitDetails = ({ unitId }) => {
   let { path, url } = useRouteMatch();
 
   const [containers, setContainers] = useState([]);
-  const[units, setUnits] = useState([]);
+  const [units, setUnits] = useState([]);
   const token = localStorage.getItem("API_token");
   let headers = {
     authorization: `Bearer ${token}`,
@@ -50,26 +50,35 @@ const UnitDetails = ({ unitId }) => {
         }
       )
       .then((res) => {
-        setContainers(res.data);
+        setContainers(
+          res.data
+            .filter((x) => unitId === x.UnitId)
+            .sort()
+            .reverse()
+        );
       });
   };
 
   const fetchUnits = () => {
     axios
       .get(
-        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${unitId}`,
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${unitId}?created=${units.Created}`,
         {
           headers: headers,
         }
       )
       .then((res) => {
         setUnits(res.data);
+
+        unitsTable.find((x) => x.Id === unitId).Active = res.data.Active;
+        localStorage.setItem("unitsTable", JSON.stringify(unitsTable));
       });
   };
 
+  let unitsTable = JSON.parse(localStorage.getItem("unitsTable")) || [];
   useEffect(() => {
-    fetchContainers();
-    fetchUnits();
+    setUnits(unitsTable.filter((x) => x.Id === unitId)[0]);
+    fetchContainers(unitsTable.filter((x) => x.Id === unitId)[0]);
   }, []);
 
   const TypeInputRef = useRef();
@@ -78,11 +87,15 @@ const UnitDetails = ({ unitId }) => {
   const SizeInputRef = useRef();
 
   const changeUnitStatusHandler = (isActive) => {
-    axios.put(
-      `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`, {Active: isActive ? true : false}, {headers:headers}
-    ).then(res => {
-      res.status===200 && fetchUnits()
-    })
+    axios
+      .put(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${units.Id}?created=${units.Created}`,
+        { Active: isActive ? true : false },
+        { headers: headers }
+      )
+      .then((res) => {
+        res.status === 200 && fetchUnits();
+      });
   };
   const createContainerHandler = () => {
     let container = {
@@ -95,16 +108,21 @@ const UnitDetails = ({ unitId }) => {
     container = {
       Fraction: TypeInputRef.current.value,
       Type: InsertionTypeInputRef.current.value,
-      Startup: StartInputRef.current.value,
+      Startup: Number(StartInputRef.current.value),
       Size: SizeInputRef.current.value,
+      UnitId: unitId,
     };
-    axios.post(
-      `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/containers`,
-      container,
-      {
-        headers: headers,
-      }
-    );
+    axios
+      .post(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/containers`,
+        container,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        res.status === 200 && fetchContainers();
+      });
     onClose();
   };
 
@@ -119,10 +137,7 @@ const UnitDetails = ({ unitId }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <UnitInfo
-                units={units}
-                statusPutApi={changeUnitStatusHandler}
-              />
+              <UnitInfo units={units} statusPutApi={changeUnitStatusHandler} />
             </TabPanel>
             <TabPanel>
               <AddContainer

@@ -43,7 +43,8 @@ const Admins = () => {
   const dispatch = useDispatch();
 
   const deleteAdminHandler = (id) => {
-    console.log("DeleteAdminHandlerID", id);
+    console.log("DeleteAdminHandlerID", id
+  );
     // dispatch(deleteAdmin(id));
 
     const token = localStorage.getItem("API_token");

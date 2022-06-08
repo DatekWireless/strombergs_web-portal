@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import styled from "styled-components";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -21,20 +21,28 @@ const Breadcrumbs = () => {
     urlPaths.forEach((path, index) => {
       index <= idx && url.push(path);
     });
-  
+
     return url.join("/");
   };
 
   return (
-    <Breadcrumb style={{ position: "absolute", left: "19%" }}>
-      {urlPaths.map((x, idx) => {
+    <BreadcrumbContainer>
+      {urlPaths.map((path, idx) => {
         return (
           <BreadcrumbItem>
-            <Link to={"/" + makeUrl(idx)}>{capitalizeFirstLetter(x)}</Link>
+            <Link to={"/" + makeUrl(idx)}>{capitalizeFirstLetter(path)}</Link>
           </BreadcrumbItem>
         );
       })}
-    </Breadcrumb>
+    </BreadcrumbContainer>
   );
 };
+
+const BreadcrumbContainer = styled(Breadcrumb)`
+ position: absolute;
+ height: 2rem;
+left: 20%;
+display: flex;
+align-items: center;
+`;
 export default Breadcrumbs;

@@ -41,9 +41,9 @@ const Admin = ({ name, id, userID, isLogged, deleteAdminHandler, admin }) => {
           <IconConatiner title="slett" onClick={onOpen}>
             <IconDelete />
           </IconConatiner>
-          <IconConatiner title="rediger">
+          {/* <IconConatiner title="rediger">
             <IconEdit />
-          </IconConatiner>
+          </IconConatiner> */}
         </IconsWrapper>
       </AdminContainer>
       <Modal
@@ -63,7 +63,7 @@ const Admin = ({ name, id, userID, isLogged, deleteAdminHandler, admin }) => {
               colorScheme="teal"
               variant="solid"
               mr={3}
-              onClick={() => confirmDeletingAdminHandler(admin.Id)}
+              onClick={() => confirmDeletingAdminHandler(admin.Id, admin.Created)}
             >
               Ja
             </Button>
@@ -110,7 +110,7 @@ const UserName = styled.p`
 `;
 
 const IconsWrapper = styled.div`
-  width: 12.5%;
+  width: 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;

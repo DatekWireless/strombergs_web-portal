@@ -22,11 +22,10 @@ import {
 const UnitInfo = ({ units, statusPutApi }) => {
   const toast = createStandaloneToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [inOperation, setInOperation] = useState(units.Active);
 
   const changeStatusHandler = () => {
-    statusPutApi(!inOperation);
-    setInOperation(!inOperation);
+    statusPutApi(!units.Active);
+
     onClose();
     toast({
       backgroundColor: "red",
@@ -44,19 +43,19 @@ const UnitInfo = ({ units, statusPutApi }) => {
         <Span>Eier:</Span> {units.Owner}
       </InfoText>
       <InfoText>
-        <Span>Gatenavn:</Span> Hammerstads gate
+        <Span>Gatenavn:</Span> {units.StreetName}
       </InfoText>
       <InfoText>
-        <Span>Nummer:</Span> 10C
+        <Span>Nummer:</Span> {units.StreetNumber}
       </InfoText>
       <InfoText>
-        <Span>Enhet_ID:</Span> 22S-328752863292
+        <Span>Enhet_ID:</Span> {units.Id}
       </InfoText>
       <StatusContainer>
         <InfoText>
           <Span>Status:</Span>
         </InfoText>
-        {inOperation ? (
+        {units.Active ? (
           <Badge colorScheme="green">i drift</Badge>
         ) : (
           <Badge colorScheme="red">ikke i drift</Badge>
@@ -64,7 +63,7 @@ const UnitInfo = ({ units, statusPutApi }) => {
       </StatusContainer>
       <Switch
         onChange={onOpen}
-        isChecked={inOperation ? true : false}
+        isChecked={units.Active ? true : false}
         colorScheme="green"
         size="md"
       >

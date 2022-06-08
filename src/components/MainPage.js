@@ -68,5 +68,6 @@ const PageWrapper = styled.div`
 const MainView = styled.div`
   flex: 1;
   display: flex;
+  position: relative;
 `;
 export default MainPage;

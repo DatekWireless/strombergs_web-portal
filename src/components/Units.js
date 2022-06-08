@@ -55,6 +55,7 @@ const Users = () => {
   const isWorkingInputRef = useRef();
 
   const token = localStorage.getItem("API_token");
+  const [isChecked, setIsChecked] = useState(false);
 
   let headers = {
     authorization: `Bearer ${token}`,
@@ -70,6 +71,7 @@ const Users = () => {
       )
       .then((res) => {
         dispatch(updateUnit(res.data));
+        localStorage.setItem("unitsTable", JSON.stringify(res.data));
       });
   };
 
@@ -108,10 +110,10 @@ const Users = () => {
     onClose();
   };
 
-  const deleteUnitHandler = (id) => {
+  const deleteUnitHandler = (id, rangeKey) => {
     axios
       .delete(
-        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${id}`,
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${id}?created=${rangeKey}`,
         {
           headers: headers,
         }
@@ -178,16 +180,14 @@ const Users = () => {
                 <Stack spacing={6} direction="row">
                   <input
                     onClick={() =>
-                      console.log(isWorkingInputRef.current.checked)
+                      setIsChecked(isWorkingInputRef.current.checked)
                     }
                     colorScheme="teal"
                     style={{ border: "1px solid lightgrey" }}
                     ref={isWorkingInputRef}
                     type="checkbox"
                   />
-                  <label>
-                    {isWorkingInputRef ? "I drafit" : "ikke i drift"}
-                  </label>
+                  <label>{isChecked ? "I drift" : "ikke i drift"}</label>
                 </Stack>
               </Stack>
             </ModalBody>
@@ -219,6 +219,7 @@ const Users = () => {
               {units.map((unit, index) => (
                 <Unit
                   id={unit.Id}
+                  rangeKey={unit.Created}
                   key={index}
                   url={url}
                   owner={unit.Owner}

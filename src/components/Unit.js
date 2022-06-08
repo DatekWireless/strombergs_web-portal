@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
+import { ReactComponent as Delete } from "../assets/icons/Delete.svg";
 import {
   Table,
   Thead,
@@ -37,6 +38,7 @@ import {
   FormControl,
 } from "@chakra-ui/react";
 const Unit = ({
+  rangeKey,
   id,
   url,
   owner,
@@ -48,7 +50,7 @@ const Unit = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const confirmDeletingUnitHandler = () => {
-    deleteUnit(id);
+    deleteUnit(id, rangeKey);
     onClose();
   };
   return (
@@ -68,7 +70,9 @@ const Unit = ({
             <Badge colorScheme="red">ikke i drift</Badge>
           )}
         </Td>
-        <Td onClick={onOpen}>x</Td>
+        <Td onClick={onOpen}>
+          <IconDelete title="slett" onClick={onOpen} />
+        </Td>
       </Tr>
       <Modal
         motionPreset="slideInBottom"
@@ -107,6 +111,25 @@ const OwnerLink = styled(Link)`
   &:hover {
     border-bottom: 3px solid ${colors.greenLight};
   }
+`;
+
+const IconConatiner = styled.div`
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  &:hover {
+    background-color: ${colors.greenPale};
+    transition: all 0.1s ease-in-out;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+const IconDelete = styled(Delete)`
+  width: .65rem;
+  height: .65rem;
+  cursor: pointer;
 `;
 
 export default Unit;
