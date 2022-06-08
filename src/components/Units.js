@@ -177,18 +177,17 @@ const Users = () => {
                   </Stack>
                 </HStack>
 
-                <Stack spacing={6} direction="row">
-                  <input
-                    onClick={() =>
-                      setIsChecked(isWorkingInputRef.current.checked)
-                    }
-                    colorScheme="teal"
-                    style={{ border: "1px solid lightgrey" }}
-                    ref={isWorkingInputRef}
-                    type="checkbox"
-                  />
-                  <label>{isChecked ? "I drift" : "ikke i drift"}</label>
-                </Stack>
+                <Checkbox
+                  onChange={() =>
+                    setIsChecked(isWorkingInputRef.current.checked)
+                  }
+                  colorScheme="teal"
+                  spacing='1rem'
+                  ref={isWorkingInputRef}
+                  type="checkbox"
+                >
+               {isChecked ? "i drift" : "ikke i drift"}
+               </Checkbox>
               </Stack>
             </ModalBody>
             <ModalFooter>
