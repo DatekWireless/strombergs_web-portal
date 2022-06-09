@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import { HStack, Stack, Text } from "@chakra-ui/react";
+import { useAdminsQuery } from "../features/api/ApiSlice";
 
-const AdminDetails = () => {
-  const { id } = useParams();
+const AdminDetails = ({ adminId }) => {
+  const { data, isSuccess } = useAdminsQuery();
 
+  const [admin, setAdmin] = useState({});
+  console.log(isSuccess);
+  useEffect(() => {
+    if (isSuccess) {
+      data.length !== 0 && setAdmin(data.find((admin) => admin.Id === adminId));
+    }
+  }, [data]);
   return (
     <Wrapper>
       <Content>
-        <Title>Detaljer</Title> <BreakingLine />
+        <Title>Detaljer {admin.Email}</Title> <BreakingLine />
         <InfoBox>
           <Stack>
             <HStack>
-              <Heading fontSize="md">Navn: </Heading>
-              <Text fontSize="md">Magnus Johansen</Text>
+              <Heading fontSize="md">Epost: </Heading>
+              <Text fontSize="md">{admin.Email}</Text>
             </HStack>
             <HStack>
               <Heading fontSize="md">Rolle: </Heading>
@@ -24,11 +32,11 @@ const AdminDetails = () => {
             </HStack>
             <HStack>
               <Heading fontSize="md">Administrator ID: </Heading>
-              <Text fontSize="md">1SA-4433242342342343</Text>
+              <Text fontSize="md">{admin.Id}</Text>
             </HStack>
             <HStack>
               <Heading fontSize="md">Opprettet: </Heading>
-              <Text fontSize="md">31.03.2022, 14:33</Text>
+              <Text fontSize="md">{admin.Updated}</Text>
             </HStack>
           </Stack>
         </InfoBox>
@@ -36,6 +44,7 @@ const AdminDetails = () => {
     </Wrapper>
   );
 };
+
 const Wrapper = styled.div`
   height: 92.5vh;
   display: flex;

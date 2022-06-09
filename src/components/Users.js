@@ -13,6 +13,7 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import TableViewer from "react-js-table-with-csv-dl";
 
 const Users = () => {
   return (

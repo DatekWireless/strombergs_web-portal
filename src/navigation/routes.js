@@ -1,56 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { paths } from "./paths.js";
 import Home from "../components/Home";
 import Admins from "../components/Admins";
 import Users from "../components/Users";
 import Units from "../components/Units";
 import Profile from "../components/Profile";
-
-import AdminDetails from "../components/AdminDetails.js";
+import AdminDetails from "../components/AdminDetails";
 import UnitDetails from "../components/UnitDetails";
-import Registration from "../components/Registration.js";
+import Registration from "../components/Registration";
+import MainPage from "../components/MainPage.js";
+import { useHistory } from "react-router-dom";
+import { Amplify, Auth } from "aws-amplify";
 
 export const routes = [
   {
-    path: [paths.home],
+    path: "/home/:param",
     exact: true,
-    component: () => <Home />,
+    component: ({ signOut, user }) => (
+      <MainPage signOut={signOut} user={user} />
+    ),
   },
   {
-    path: [paths.admins],
+    path: "/home/:param/:id",
     exact: true,
-    component: () => <Admins />,
+    component: ({ signOut, user }) => <MainPage signOut={signOut} user={user}/>,
   },
   {
-    path: [paths.users],
-    component: () => <Users />,
-  },
-  {
-    path: [paths.registration],
-    component: () => <Registration />,
-  },
-  {
-    path: [paths.units],
-    exact: true,
-    component: () => <Units />,
-  },
-  {
-    path: [paths.profile],
-    component: () => <Profile />,
-  },
-  {
-    path: [paths.adminDetails],
-    exact: true,
-    component: () => <AdminDetails />,
-  },
-  {
-    path: [paths.unitDetails],
-    component: () => <UnitDetails />,
+    path: "*",
+    exact: false,
+    component: ({ signOut }) => <MainPage signOut={signOut} />,
   },
 ];
 
-const Routes = () => {
+const Routes = ({ ...props }) => {
+  useEffect(async () => {
+    const token = await getToken();
+    localStorage.setItem("API_token", token.getIdToken().getJwtToken());
+  }, []);
+
+  const getToken = () => {
+    let data = Auth.currentSession();
+    if (data) {
+      return data;
+    }
+  };
+
   return (
     <>
       <Switch>
@@ -59,7 +55,7 @@ const Routes = () => {
             key={index}
             path={route.path}
             exact={route.exact}
-            children={<route.component />}
+            children={<route.component {...props} />}
           />
         ))}
       </Switch>

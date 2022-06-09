@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
+import { useSelector, useDispatch } from "react-redux";
+import { addUnit, updateUnit } from "../features/UnitsSlice.js";
 import {
   Table,
   Thead,
@@ -35,57 +37,92 @@ import {
   Radio,
   RadioGroup,
   FormControl,
+  Spinner,
 } from "@chakra-ui/react";
-
+import Unit from "./Unit";
 import { ReactComponent as Add } from "../assets/icons/Add.svg";
+import axios from "axios";
+
 const Users = () => {
+  const units = useSelector((state) => state.unitsReducer.units);
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { url } = useRouteMatch();
-  const [value, setValue] = useState("1");
-  const [units, setUnits] = useState([
-    {
-      owner: "XXL",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: true,
-      id: 1,
-    },
-    {
-      owner: "Coop Mega",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: true,
-      id: 2,
-    },
-    {
-      owner: "Frogner Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: false,
-      id: 3,
-    },
-    {
-      owner: "Bygdøy Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: false,
-      id: 4,
-    },
-    {
-      owner: "Majorstuen Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: false,
-      id: 5,
-    },
-    {
-      owner: "Hasle Borettslag",
-      street: "Vøyensvingen",
-      postcode: "14B",
-      inUse: true,
-      id: 6,
-    },
-  ]);
+
+  const OwnerInputRef = useRef();
+  const StreetInputRef = useRef();
+  const StreetNumberInputRef = useRef();
+  const isWorkingInputRef = useRef();
+
+  const token = localStorage.getItem("API_token");
+  const [isChecked, setIsChecked] = useState(false);
+
+  let headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const getUnits = () => {
+    axios
+      .get(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        dispatch(updateUnit(res.data));
+        localStorage.setItem("unitsTable", JSON.stringify(res.data));
+      });
+  };
+
+  useEffect(() => {
+    getUnits();
+  }, []);
+
+  const createUnitHandler = () => {
+    let unit = {
+      Owner: "",
+      StreetName: "",
+      StreetNumber: null,
+      Active: false,
+    };
+    unit = {
+      Owner: OwnerInputRef.current.value,
+      StreetName: StreetInputRef.current.value,
+      StreetNumber: StreetNumberInputRef.current.value,
+      Active: isWorkingInputRef.current.checked ? true : false,
+    };
+
+    axios
+      .post(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units`,
+        unit,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          getUnits();
+        }
+      });
+
+    onClose();
+  };
+
+  const deleteUnitHandler = (id, rangeKey) => {
+    axios
+      .delete(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/units/${id}?created=${rangeKey}`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        dispatch(updateUnit(units.filter((unit) => unit.Id !== id)));
+      });
+  };
+
   return (
     <Wrapper>
       <Content>
@@ -114,6 +151,7 @@ const Users = () => {
                     focusBorderColor="teal.400"
                     variant="filled"
                     placeholder="oppgi eier"
+                    ref={OwnerInputRef}
                   />
                 </Stack>
                 <HStack>
@@ -125,39 +163,41 @@ const Users = () => {
                       placeholder="oppgi gatenavn"
                       htmlSize={32}
                       width="auto"
+                      ref={StreetInputRef}
                     />
                   </Stack>
                   <Stack spacing={1}>
                     <Text fontSize="xs">Nummer</Text>
-                    <Input variant="filled" htmlSize={4} width="auto" />
+                    <Input
+                      variant="filled"
+                      htmlSize={4}
+                      width="auto"
+                      ref={StreetNumberInputRef}
+                    />
                   </Stack>
                 </HStack>
-
-                <RadioGroup onChange={setValue} value={value}>
-                  <Stack spacing={6} direction="row">
-                    <Radio
-                      colorScheme="teal"
-                      style={{ border: "1px solid lightgrey" }}
-                      value="1"
-                    >
-                      i drift
-                    </Radio>
-                    <Radio
-                      colorScheme="teal"
-                      style={{ border: "1px solid lightgrey" }}
-                      value="2"
-                    >
-                      ikke i drift
-                    </Radio>
-                  </Stack>
-                </RadioGroup>
+                <Stack>
+                  <CheckboxIcon
+                    onChange={() =>
+                      setIsChecked(isWorkingInputRef.current.checked)
+                    }
+                    colorScheme="teal"
+                    spacing="1rem"
+                    ref={isWorkingInputRef}
+                    type="checkbox"
+                  >
+                    {isChecked ? "i drift" : "ikke i drift"}
+                  </CheckboxIcon>
+                </Stack>
               </Stack>
             </ModalBody>
             <ModalFooter>
               <Button colorScheme="teal" mr={3} onClick={onClose}>
                 Lukk
               </Button>
-              <Button variant="ghost">Lagre</Button>
+              <Button variant="ghost" onClick={createUnitHandler}>
+                Lagre
+              </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
@@ -172,26 +212,22 @@ const Users = () => {
                 <Th>Gatenavn</Th>
                 <Th>Nummer</Th>
                 <Th>Status</Th>
+                <Th>Slett</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {units.map((unit) => (
-                <Tr key={unit.id}>
-                  <Td>
-                    <OwnerLink exact="true" to={`${url}/${unit.owner}`}>
-                      {unit.owner}
-                    </OwnerLink>
-                  </Td>
-                  <Td>{unit.street}</Td>
-                  <Td>{unit.postcode}</Td>
-                  <Td>
-                    {unit.inUse ? (
-                      <Badge colorScheme="green">i drift</Badge>
-                    ) : (
-                      <Badge colorScheme="red">ikke i drift</Badge>
-                    )}
-                  </Td>
-                </Tr>
+              {units.map((unit, index) => (
+                <Unit
+                  id={unit.Id}
+                  rangeKey={unit.Created}
+                  key={index}
+                  url={url}
+                  owner={unit.Owner}
+                  streetName={unit.StreetName}
+                  streetNumber={unit.StreetNumber}
+                  active={unit.Active}
+                  deleteUnit={deleteUnitHandler}
+                />
               ))}
             </Tbody>
           </Table>
@@ -234,16 +270,14 @@ const AddUnit = styled(Tag)`
     border: 2px solid #69b1bf;
   }
 `;
+const CheckboxIcon = styled(Checkbox)`
+  span:first-of-type {
+    border: 1px solid lightgrey;
+  }
+`;
 
 const TableMainContainer = styled(TableContainer)`
   margin-top: 3rem;
-`;
-const OwnerLink = styled(Link)`
-  position: relative;
-  padding: 0.15rem;
-  &:hover {
-    border-bottom: 3px solid ${colors.greenLight};
-  }
 `;
 
 export default Users;
