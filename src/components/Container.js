@@ -5,22 +5,94 @@ import { Link, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as Delete } from "../assets/icons/Delete.svg";
 import { ReactComponent as Edit } from "../assets/icons/Edit.svg";
-const Container = ({ fraction, containerId }) => {
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Badge,
+  useToast,
+  Tag,
+  TagLabel,
+  TagRightIcon,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Stack,
+  textDecoration,
+  HStack,
+  Input,
+  Checkbox,
+  Text,
+  Radio,
+  RadioGroup,
+  FormControl,
+} from "@chakra-ui/react";
+const Container = ({ fraction, type, size, startup, rangeKey, containerId, deleteContainer }) => {
   let { url } = useRouteMatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const confirmDeletingContainerHandler = () => {
+    deleteContainer(containerId, rangeKey);
+    onClose();
+  };
   return (
-    <UserContainer to={`/${url}/${containerId}`}>
-      <LinkContainer>
-        <UserName>{fraction}</UserName>
-      </LinkContainer>
-      <IconsWrapper>
-        <IconConatiner>
-          <IconDelete />
-        </IconConatiner>
-        <IconConatiner>
-          <IconEdit />
-        </IconConatiner>
-      </IconsWrapper>
-    </UserContainer>
+    <>
+      <Tr>
+        <Td>
+          <UserName>{fraction}</UserName>
+        </Td>
+        <Td>
+          <UserName>{type}</UserName>
+        </Td>
+        <Td>
+          <UserName>{startup}</UserName>
+        </Td>
+        <Td>
+          <UserName>{size}</UserName>
+        </Td>
+        <Td>
+          <IconDelete onClick={onOpen}/>
+        </Td>
+      </Tr>
+      <Modal
+        motionPreset="slideInBottom"
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            Er du sikker at du vil slette denne enheten?
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalFooter>
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              mr={3}
+              onClick={() => confirmDeletingContainerHandler()}
+            >
+              Ja
+            </Button>
+            <Button variant="ghost" colorScheme="teal" mr={3} onClick={onClose}>
+              Nei
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 const UserContainer = styled(Link)`
@@ -75,7 +147,9 @@ const IconConatiner = styled.div`
   cursor: pointer;
 `;
 const IconDelete = styled(Delete)`
-  width: 0.85rem;
+  width: .65rem;
+  height: .65rem;
+  cursor: pointer;
 `;
 const IconEdit = styled(Edit)`
   width: 0.85rem;

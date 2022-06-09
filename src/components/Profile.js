@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
+import { Stack, Text } from "@chakra-ui/react";
 import { paths } from "../navigation/paths";
 import { useSelector } from "react-redux";
 import { ReactComponent as LogInIcon } from "../assets/icons/LogIn.svg";
@@ -16,10 +17,16 @@ const Profile = ({ signOut, user }) => {
         <Title>Profil</Title>
         <BreakingLine />
         <ProfileContent>
-          <Epost>Epost: </Epost>
-          <EpostData>{user.attributes.email}</EpostData>
-          <Id>Id: </Id>
-          <IdData>{user.username}</IdData>
+          <Stack direction="column">
+          <Stack  direction="row">
+            <Text fontSize='lg'>Epost: </Text>
+            <Text fontSize='lg'>{user.attributes.email}</Text>
+          </Stack>
+          <Stack direction="row">
+            <Text fontSize='lg'>Id: </Text>
+            <Text fontSize='lg'>{user.username}</Text>
+          </Stack>
+          </Stack>
           <LogContainer>
             {isLoggedIn && (
               <LogIn>
@@ -66,16 +73,8 @@ const BreakingLine = styled.hr`
 const ProfileContent = styled.div`
   margin-top: 2.5rem;
 `;
-const Id = styled.p`
-  font-weight: 600;
-  font-size: 1rem;
-`;
-const IdData = styled.p`
-  font-weight: 400;
-  font-size: 1rem;
-`;
-const Epost = styled(Id)``;
-const EpostData = styled(IdData)``;
+
+
 const LogContainer = styled.div`
   margin-top: 1rem;
   height: 5rem;
@@ -103,7 +102,7 @@ const LogInText = styled.p`
   display: inline-block;
   width: 5rem;
   text-align: left;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   margin-left: 1rem;
 `;
 const LogOutText = styled(LogInText)``;

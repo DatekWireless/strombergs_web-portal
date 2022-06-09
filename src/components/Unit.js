@@ -113,19 +113,7 @@ const OwnerLink = styled(Link)`
   }
 `;
 
-const IconConatiner = styled.div`
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  &:hover {
-    background-color: ${colors.greenPale};
-    transition: all 0.1s ease-in-out;
-  }
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
+
 const IconDelete = styled(Delete)`
   width: .65rem;
   height: .65rem;

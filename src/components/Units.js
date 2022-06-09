@@ -176,18 +176,19 @@ const Users = () => {
                     />
                   </Stack>
                 </HStack>
-
-                <Checkbox
-                  onChange={() =>
-                    setIsChecked(isWorkingInputRef.current.checked)
-                  }
-                  colorScheme="teal"
-                  spacing='1rem'
-                  ref={isWorkingInputRef}
-                  type="checkbox"
-                >
-               {isChecked ? "i drift" : "ikke i drift"}
-               </Checkbox>
+                <Stack>
+                  <CheckboxIcon
+                    onChange={() =>
+                      setIsChecked(isWorkingInputRef.current.checked)
+                    }
+                    colorScheme="teal"
+                    spacing="1rem"
+                    ref={isWorkingInputRef}
+                    type="checkbox"
+                  >
+                    {isChecked ? "i drift" : "ikke i drift"}
+                  </CheckboxIcon>
+                </Stack>
               </Stack>
             </ModalBody>
             <ModalFooter>
@@ -267,6 +268,11 @@ const AddUnit = styled(Tag)`
   transition: all 0.2s ease-in-out;
   &:hover {
     border: 2px solid #69b1bf;
+  }
+`;
+const CheckboxIcon = styled(Checkbox)`
+  span:first-of-type {
+    border: 1px solid lightgrey;
   }
 `;
 
