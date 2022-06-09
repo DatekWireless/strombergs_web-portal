@@ -25,9 +25,7 @@ export const routes = [
   {
     path: "/home/:param/:id",
     exact: true,
-    component: ({ signOut, user }) => (
-      <MainPage signOut={signOut} user={user} />
-    ),
+    component: ({ signOut, user }) => <MainPage signOut={signOut} user={user}/>,
   },
   {
     path: "*",
