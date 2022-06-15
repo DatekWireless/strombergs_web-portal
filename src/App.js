@@ -6,7 +6,7 @@ import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./aws-exports";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import Routes from "../src/navigation/Routes";
+import Routes from "../src/navigation/Routes.js";
 import styled from "styled-components";
 import { colors } from "./styles/variables";
 import { ReactComponent as MainLogo } from "./assets/images/Logo.svg";
