@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import MainPage from "../components/MainPage.js";
 import { Amplify, Auth } from "aws-amplify";
 
-export const approutes = [
+const approutes = [
   {
     path: "/home/:param",
     exact: true,
