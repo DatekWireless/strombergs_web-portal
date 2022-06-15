@@ -1,20 +1,9 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { paths } from "./paths.js";
-import Home from "../components/Home";
-import Admins from "../components/Admins";
-import Users from "../components/Users";
-import Units from "../components/Units";
-import Profile from "../components/Profile";
-import AdminDetails from "../components/AdminDetails";
-import UnitDetails from "../components/UnitDetails";
-import Registration from "../components/Registration";
 import MainPage from "../components/MainPage.js";
-import { useHistory } from "react-router-dom";
 import { Amplify, Auth } from "aws-amplify";
 
-export const routes = [
+export const approutes = [
   {
     path: "/home/:param",
     exact: true,
@@ -50,7 +39,7 @@ const Routes = ({ ...props }) => {
   return (
     <>
       <Switch>
-        {routes.map((route, index) => (
+        {approutes.map((route, index) => (
           <Route
             key={index}
             path={route.path}
