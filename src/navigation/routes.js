@@ -14,7 +14,9 @@ const approutes = [
   {
     path: "/home/:param/:id",
     exact: true,
-    component: ({ signOut, user }) => <MainPage signOut={signOut} user={user}/>,
+    component: ({ signOut, user }) => (
+      <MainPage signOut={signOut} user={user} />
+    ),
   },
   {
     path: "*",
@@ -24,9 +26,12 @@ const approutes = [
 ];
 
 const Routes = ({ ...props }) => {
-  useEffect(async () => {
-    const token = await getToken();
-    localStorage.setItem("API_token", token.getIdToken().getJwtToken());
+  useEffect(() => {
+    async function fetchData() {
+      const token = await getToken();
+      localStorage.setItem("API_token", token.getIdToken().getJwtToken());
+    }
+    fetchData()
   }, []);
 
   const getToken = () => {
