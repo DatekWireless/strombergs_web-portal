@@ -29,7 +29,7 @@ const Breadcrumbs = () => {
     <BreadcrumbContainer>
       {urlPaths.map((path, idx) => {
         return (
-          <BreadcrumbItem>
+          <BreadcrumbItem key={idx}>
             <Link to={"/" + makeUrl(idx)}>{capitalizeFirstLetter(path)}</Link>
           </BreadcrumbItem>
         );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -39,30 +39,67 @@ import {
   RadioGroup,
   FormControl,
 } from "@chakra-ui/react";
-const Container = ({ fraction, type, size, startup, rangeKey, containerId, deleteContainer }) => {
+const Container = ({
+  fraction,
+  type,
+  size,
+  startup,
+  rangeKey,
+  containerId,
+  deleteContainer,
+}) => {
   let { url } = useRouteMatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const confirmDeletingContainerHandler = () => {
     deleteContainer(containerId, rangeKey);
     onClose();
   };
+  const custom_date = (d) => {
+    let startDate = new Date(d);
+
+    const custom_months = [
+      "Januar",
+      "Februar",
+      "Mars",
+      "April",
+      "Maj",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "December",
+    ];
+    const custom_days = [
+      "mandag",
+      "tirsdag",
+      "onsdag",
+      "torsdag",
+      "fredag",
+      "lørdag",
+      "søndag",
+    ];
+    const date =
+      ` ${startDate.getDate()}. 
+      ${custom_months[startDate.getMonth()]}
+      ${startDate.getFullYear()},
+      ${custom_days[startDate.getDay()]}`
+    var time = startDate.getHours() + ":" + startDate.getMinutes();
+    return date;
+  };
+
+  const time = startup && custom_date(startup);
+
   return (
     <>
       <Tr>
+        <Td>{fraction}</Td>
+        <Td>{type}</Td>
+        <Td>{time}</Td>
+        <Td>{size}</Td>
         <Td>
-          <UserName>{fraction}</UserName>
-        </Td>
-        <Td>
-          <UserName>{type}</UserName>
-        </Td>
-        <Td>
-          <UserName>{startup}</UserName>
-        </Td>
-        <Td>
-          <UserName>{size}</UserName>
-        </Td>
-        <Td>
-          <IconDelete onClick={onOpen}/>
+          <IconDelete onClick={onOpen} />
         </Td>
       </Tr>
       <Modal
@@ -121,7 +158,7 @@ const LinkContainer = styled(Link)`
   width: 70%;
 `;
 
-const UserName = styled.p`
+const UserName = styled(Text)`
   padding-left: 0.5rem;
   font-size: 0.95rem;
   font-weight: 500;
@@ -147,8 +184,8 @@ const IconConatiner = styled.div`
   cursor: pointer;
 `;
 const IconDelete = styled(Delete)`
-  width: .65rem;
-  height: .65rem;
+  width: 0.65rem;
+  height: 0.65rem;
   cursor: pointer;
 `;
 const IconEdit = styled(Edit)`

@@ -216,7 +216,7 @@ const Users = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {units.map((unit, index) => (
+              {units && units.map((unit, index) => (
                 <Unit
                   id={unit.Id}
                   rangeKey={unit.Created}

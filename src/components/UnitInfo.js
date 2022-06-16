@@ -104,6 +104,7 @@ const InfoText = styled(Text)`
 `;
 const Span = styled.span`
   font-weight: 600;
+  display: inline;
 `;
 const StatusContainer = styled.div`
   display: flex;

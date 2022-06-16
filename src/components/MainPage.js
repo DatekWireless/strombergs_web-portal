@@ -28,10 +28,10 @@ const MainPage = ({ signOut, isLogged, user }) => {
     signOut();
     localStorage.clear("API_token");
   };
+
   return (
     <PageWrapper>
       <Topbar user={user} isLogged={isLogged} />
-
       <MainView>
         <Sidebar />
         <Breadcrumbs />

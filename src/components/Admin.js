@@ -103,7 +103,7 @@ const LinkContainer = styled(Link)`
   width: 80%;
 `;
 
-const UserName = styled.p`
+const UserName = styled(Text)`
   padding-left: 0.5rem;
   font-size: 0.95rem;
   font-weight: 500;

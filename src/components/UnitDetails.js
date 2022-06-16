@@ -119,7 +119,7 @@ const UnitDetails = ({ unitId }) => {
     container = {
       Fraction: TypeInputRef.current.value,
       Type: InsertionTypeInputRef.current.value,
-      Startup: Number(StartInputRef.current.value),
+      Startup: Number(new Date(StartInputRef.current.value)),
       Size: SizeInputRef.current.value,
       UnitId: unitId,
     };
@@ -247,6 +247,7 @@ const UnitDetails = ({ unitId }) => {
               <Stack spacing={1}>
                 <Text fontSize="xs">Oppstart av drift</Text>
                 <Input
+                  type="date"
                   focusBorderColor="teal.400"
                   variant="filled"
                   placeholder="oppgi oppastart av drift"
@@ -292,6 +293,7 @@ const Content = styled.div`
   width: 75%;
   background-color: white;
   height: auto;
+  overflow: auto;
 `;
 
 const Title = styled.h1`

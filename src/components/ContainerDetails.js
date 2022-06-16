@@ -30,7 +30,7 @@ const Text = styled.p`
   margin-right: 1rem;
 `;
 
-const Span = styled.span`
+const Span = styled.p`
   font-weight: 600;
 `;
 

@@ -5,8 +5,40 @@ import { colors } from "../styles/variables";
 import { paths } from "../navigation/paths";
 import { ReactComponent as AddUser } from "../assets/icons/AddUser.svg";
 import { ReactComponent as ForwardArrow } from "../assets/icons/ForwardArrow.svg";
-
-import { useSelector, useDispatch } from "react-redux";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Badge,
+  useToast,
+  Tag,
+  TagLabel,
+  TagRightIcon,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Stack,
+  textDecoration,
+  HStack,
+  Input,
+  Checkbox,
+  Text,
+  Radio,
+  RadioGroup,
+  FormControl,
+} from "@chakra-ui/react";
 
 const Home = () => {
   const { url, path } = useRouteMatch;
@@ -40,7 +72,7 @@ const Home = () => {
               </CardHeaderWrapper>
             </Card>
           </SectionCards>
-          <AddUserCard >
+          <AddUserCard>
             <AddUserIcon />
             <AddUserText>Opprett en ny administrator</AddUserText>
           </AddUserCard>
@@ -114,7 +146,7 @@ const CardHeader = styled.h1`
   text-decoration: none;
   font-size: 0.85rem;
 `;
-const AddUserCard = styled(Link)`
+const AddUserCard = styled.div`
   width: auto;
   border: 2px solid ${colors.greenMain};
   width: 12.5rem;
@@ -138,7 +170,7 @@ const AddUserIcon = styled(AddUser)`
   margin: 1rem;
 `;
 
-const AddUserText = styled.p`
+const AddUserText = styled(Text)`
   font-size: 0.85rem;
 `;
 

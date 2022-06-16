@@ -22,7 +22,7 @@ const Sidebar = () => {
             exact
           >
             <IconHome />
-            <p>Hjem</p>
+            <span>Hjem</span>
           </NavigationLink>
         </NavigationEl>
         <NavigationEl>
@@ -34,7 +34,7 @@ const Sidebar = () => {
            to="/home/administratorer"
           >
             <IconAdmins />
-            <p>Adminitratorer</p>
+            <span>Adminitratorer</span>
           </NavigationLink>
         </NavigationEl>
         <NavigationEl>
@@ -46,7 +46,7 @@ const Sidebar = () => {
             to={'/home/brukere'}
           >
             <IconUsers />
-            <p>Brukere</p>
+            <span>Brukere</span>
           </NavigationLink>
         </NavigationEl>
         <NavigationEl>
@@ -58,7 +58,7 @@ const Sidebar = () => {
             to={'/home/enheter'}
           >
             <IconUnits />
-            <p>Enheter</p>
+            <span>Enheter</span>
           </NavigationLink>
         </NavigationEl>
         <NavigationEl>
@@ -70,7 +70,7 @@ const Sidebar = () => {
             to={'/home/profil'}
           >
             <IconProfile />
-            <p>Profil</p>
+            <span>Profil</span>
           </NavigationLink>
         </NavigationEl>
       </NavigationList>
