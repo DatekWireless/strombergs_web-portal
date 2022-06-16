@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import MainPage from "../components/MainPage.js";
 import { Amplify, Auth } from "aws-amplify";
 
-const approutes = [
+const appRoutes = [
   {
     path: "/home/:param",
     exact: true,
@@ -25,7 +25,7 @@ const approutes = [
   },
 ];
 
-const Routes = ({ ...props }) => {
+const Routes = ({...props}) => {
   useEffect(() => {
     async function fetchData() {
       const token = await getToken();
@@ -44,7 +44,7 @@ const Routes = ({ ...props }) => {
   return (
     <>
       <Switch>
-        {approutes.map((route, index) => (
+        {appRoutes.map((route, index) => (
           <Route
             key={index}
             path={route.path}
