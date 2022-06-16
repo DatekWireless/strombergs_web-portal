@@ -10,7 +10,7 @@ import "@aws-amplify/ui-react/styles.css";
 import styled from "styled-components";
 import { colors } from "./styles/variables";
 import { ReactComponent as MainLogo } from "./assets/images/Logo.svg";
-import Routes from "./navigation/Routes";
+import Routes from "./navigation/Routes.js";
 
 Amplify.configure(awsExports);
 
