@@ -25,7 +25,7 @@ const appRoutes = [
   },
 ];
 
-const Routes = ({...props}) => {
+const PortalRoutes = ({...props}) => {
   useEffect(() => {
     async function fetchData() {
       const token = await getToken();
@@ -57,4 +57,4 @@ const Routes = ({...props}) => {
   );
 };
 
-export default Routes;
+export default PortalRoutes;

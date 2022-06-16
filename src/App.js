@@ -10,7 +10,7 @@ import "@aws-amplify/ui-react/styles.css";
 import styled from "styled-components";
 import { colors } from "./styles/variables";
 import { ReactComponent as MainLogo } from "./assets/images/Logo.svg";
-import Routes from "./navigation/Routes.js";
+import PortalRoutes from "./navigation/PortalRoutes";
 
 Amplify.configure(awsExports);
 
@@ -20,7 +20,7 @@ function App() {
       <AuthEl>
         {({ signOut, user }) => (
           <Router>
-            <Routes signOut={signOut} user={user} />
+            <PortalRoutes signOut={signOut} user={user} />
             <Reset />
           </Router>
         )}

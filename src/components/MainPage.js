@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Routes from "../navigation/Routes";
+import Routes from "../navigation/PortalRoutes";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
