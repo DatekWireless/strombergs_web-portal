@@ -174,9 +174,7 @@ const UnitDetails = ({ unitId }) => {
               </AddContainer>
               <ContainersData>
                 <Table variant="striped" size="sm" colorScheme={"teal"}>
-                  <TableCaption>
-                    Klikk på en eier til en enhet for å se detaljer
-                  </TableCaption>
+                  
                   <Thead>
                     <Tr>
                       <Th>Fraksjon</Th>

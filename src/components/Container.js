@@ -80,16 +80,15 @@ const Container = ({
       "lørdag",
       "søndag",
     ];
-    const date =
-      ` ${startDate.getDate()}. 
+    const date = ` ${startDate.getDate()}. 
       ${custom_months[startDate.getMonth()]}
       ${startDate.getFullYear()},
-      ${custom_days[startDate.getDay()]}`
+      ${custom_days[startDate.getDay()]}`;
     var time = startDate.getHours() + ":" + startDate.getMinutes();
     return date;
   };
 
-  const time = startup && custom_date(startup);
+  const [time, setTime] = useState(startup && custom_date(startup));
 
   return (
     <>

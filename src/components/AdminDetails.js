@@ -19,7 +19,7 @@ const AdminDetails = ({ adminId }) => {
   return (
     <Wrapper>
       <Content>
-        <Title>Detaljer {admin.Email}</Title> <BreakingLine />
+        <Title>Detaljer: {admin.Email}</Title> <BreakingLine />
         <InfoBox>
           <Stack>
             <HStack>
