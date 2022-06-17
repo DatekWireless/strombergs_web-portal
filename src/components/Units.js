@@ -216,7 +216,9 @@ const Users = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {units && units.map((unit, index) => (
+              {units ? <SpinnerWrapper>
+            <Spinner size="lg" color={colors.greenMain} />
+          </SpinnerWrapper> : units.map((unit, index) => (
                 <Unit
                   id={unit.Id}
                   rangeKey={unit.Created}
@@ -269,6 +271,12 @@ const AddUnit = styled(Tag)`
   &:hover {
     border: 2px solid #69b1bf;
   }
+`;
+const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 4rem;
+  padding-top: 1rem;
+  justify-content: center;
 `;
 const CheckboxIcon = styled(Checkbox)`
   span:first-of-type {

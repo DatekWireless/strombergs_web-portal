@@ -88,10 +88,11 @@ const LogIn = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 6.5rem;
-  border: 3px solid ${colors.white};
-  padding: 0.125rem;
+  background-color: ${colors.greyLight};
+  padding: 0.25rem;
 `;
 const LogOut = styled(LogIn)`
+border-bottom: 3px solid white;
   &:hover {
     border-bottom: 3px solid ${colors.greenLight};
   }
