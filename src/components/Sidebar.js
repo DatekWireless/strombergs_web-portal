@@ -34,7 +34,7 @@ const Sidebar = () => {
            to="/home/administratorer"
           >
             <IconAdmins />
-            <span>Adminitratorer</span>
+            <span>Administratorer</span>
           </NavigationLink>
         </NavigationEl>
         <NavigationEl>

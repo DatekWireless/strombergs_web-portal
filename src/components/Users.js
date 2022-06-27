@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
@@ -13,9 +13,31 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import axios from "axios";
 import TableViewer from "react-js-table-with-csv-dl";
 
 const Users = () => {
+  const token = localStorage.getItem("API_token");
+  let headers = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const getUsers = () => {
+    axios
+      .get(
+        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/users`,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <Wrapper>
       <Content>
