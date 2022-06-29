@@ -4,6 +4,8 @@ import MainPage from "../components/MainPage.js";
 import { Amplify, Auth } from "aws-amplify";
 
 const appRoutes = [
+
+
   {
     path: "/home/:param",
     exact: true,
@@ -21,7 +23,7 @@ const appRoutes = [
   {
     path: "*",
     exact: false,
-    component: ({ signOut }) => <MainPage signOut={signOut} />,
+    component: ({ signOut, user }) => <MainPage signOut={signOut} user={user}/>,
   },
 ];
 

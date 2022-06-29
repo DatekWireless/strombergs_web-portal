@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import {
+  Spinner,
   Table,
   Thead,
   Tbody,
@@ -12,32 +13,44 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Text,
 } from "@chakra-ui/react";
 import axios from "axios";
 import TableViewer from "react-js-table-with-csv-dl";
+import User from "./User";
+import { useUsersQuery } from "../../src/features/api/ApiSlice";
 
 const Users = () => {
-  const token = localStorage.getItem("API_token");
-  let headers = {
-    authorization: `Bearer ${token}`,
-  };
-
-  const getUsers = () => {
-    axios
-      .get(
-        `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/users`,
-        {
-          headers: headers,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      });
-  };
-
+  const { data, error, isLoading, isFetching, isSuccess } = useUsersQuery();
+  const [usersList, setUsersList] = useState("Initial State");
   useEffect(() => {
-    getUsers();
-  }, []);
+    if (isSuccess) {
+      data.length === 0 ? setUsersList("Error") : setUsersList(data);
+    }
+  }, [useUsersQuery()]);
+
+  // const token = localStorage.getItem("API_token");
+  // let headers = {
+  //   authorization: `Bearer ${token}`,
+  // };
+
+  // const getUsers = () => {
+  //   axios
+  //     .get(
+  //       `https://gpshu4lon5.execute-api.eu-north-1.amazonaws.com/Test/users`,
+  //       {
+  //         headers: headers,
+  //       }
+  //     )
+  //     .then((res) => {
+  //      console.log(res.data);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getUsers();
+  // }, []);
+
   return (
     <Wrapper>
       <Content>
@@ -48,264 +61,19 @@ const Users = () => {
             <Thead>
               <Tr>
                 <Th>Navn</Th>
-                <Th>Gatenavn</Th>
-                <Th>Nummer</Th>
+                <Th>Adresse</Th>
                 <Th>Epost</Th>
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
-              <Tr>
-                <Td>Tobias Jørgensen</Td>
-                <Td>Vøyensvingen</Td>
-                <Td>14B</Td>
-                <Td>tj@gmail.com</Td>
-              </Tr>
+              {usersList === "Initial State" ? (
+                <SpinnerWrapper>
+                  <Spinner size="lg" color={colors.greenMain} />
+                </SpinnerWrapper>
+              ) : (
+                usersList !== "Error" &&
+                usersList.map((user, index) => <User key={index} user={user} />)
+              )}
             </Tbody>
           </Table>
         </TableMainContainer>
@@ -342,6 +110,12 @@ const BreakingLine = styled.hr`
 
 const TableMainContainer = styled(TableContainer)`
   margin-top: 3rem;
+`;
+const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 4rem;
+  padding-top: 1rem;
+  justify-content: center;
 `;
 
 export default Users;
